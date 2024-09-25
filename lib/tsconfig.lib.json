@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/lib",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "types": []
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "files": [
+    "./components/public-api.ts"
+  ],
+  "angularCompilerOptions": {
+    "flatModuleOutFile": "swift-layout.js",
+    "flatModuleId": "swift-layout"
+  }
+}

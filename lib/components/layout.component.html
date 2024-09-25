@@ -1,0 +1,42 @@
+<swift-layout-section orientation="vertical">
+
+  @if( topPaneTemplate ) {
+    <ng-template firstPane>
+      <ng-container *ngTemplateOutlet="topPaneTemplate"></ng-container>
+    </ng-template>
+  }
+
+  <ng-template middlePane>
+    @if( leftPaneTemplate || rightPaneTemplate ) {
+      <swift-layout-section orientation="horizontal">
+
+        @if( leftPaneTemplate ) {
+          <ng-template firstPane>
+            <ng-container *ngTemplateOutlet="leftPaneTemplate"></ng-container>
+          </ng-template>
+        }
+
+        <ng-template middlePane>
+          <ng-container *ngTemplateOutlet="centerPaneTemplate"></ng-container>
+        </ng-template>
+
+        @if( rightPaneTemplate ) {
+          <ng-template lastPane>
+            <ng-container *ngTemplateOutlet="rightPaneTemplate"></ng-container>
+          </ng-template>
+        }
+
+      </swift-layout-section>
+    }
+    @else {
+      <ng-container *ngTemplateOutlet="centerPaneTemplate"></ng-container>
+    }
+  </ng-template>
+
+  @if( bottomPaneTemplate ) {
+    <ng-template lastPane>
+      <ng-container *ngTemplateOutlet="bottomPaneTemplate"></ng-container>
+    </ng-template>
+  }
+
+</swift-layout-section>

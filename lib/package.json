@@ -1,0 +1,12 @@
+{
+  "name": "swift-layout",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/core": "~18.2.5",
+    "@angular/common": "~18.2.5"
+  },
+  "dependencies": {
+    "tslib": "~2.7.0"
+  },
+  "sideEffects": false
+}

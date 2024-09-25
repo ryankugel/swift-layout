@@ -1,0 +1,74 @@
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parserOptions": {
+    "project": [ "./tsconfig.json" ]
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "deprecation"
+  ],
+  "ignorePatterns": [
+    "**/*.html"
+  ],
+  "rules": {
+    "@typescript-eslint/array-type": "warn",
+    "@typescript-eslint/member-ordering": [ "warn", {
+      "default": [
+        "public-static-field",
+        "protected-static-field",
+        "private-static-field",
+        "#private-static-field",
+
+        "public-instance-field",
+        "protected-instance-field",
+        "private-instance-field",
+        "#private-instance-field",
+
+        "public-static-method",
+        "protected-static-method",
+        "private-static-method",
+        "#private-static-method",
+
+        "public-instance-method",
+        "protected-instance-method",
+        "private-instance-method",
+        "#private-instance-method"
+      ]
+    } ],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-require-imports": "warn",
+    "@typescript-eslint/no-this-alias": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-var-requires": "off",
+    "array-bracket-spacing": [ "error", "always" ],
+    "curly": "warn",
+    "deprecation/deprecation": "warn",
+    "eol-last": "warn",
+    "eqeqeq": "error",
+    "max-len": [ "warn", {
+      "code": 160,
+      "ignoreStrings": true
+    } ],
+    "nonblock-statement-body-position": "warn",
+    "no-array-constructor": [ 2 ],
+    "no-irregular-whitespace": "warn",
+    "no-prototype-builtins": "off",
+    "no-undef": "off",
+    "no-unused-vars": "off",
+    "object-curly-spacing": [ "error", "always" ],
+    "prefer-const": "off",
+    "quotes": [ 1, "double" ],
+    "quote-props": [ 1, "as-needed" ],
+    "semi": "error",
+    "sort-imports": [ "warn", {
+      "ignoreCase": true,
+      "ignoreDeclarationSort": true
+    } ],
+    "space-in-parens": [ "error", "always" ],
+    "space-before-function-paren": [ "error", "never" ]
+  }
+}

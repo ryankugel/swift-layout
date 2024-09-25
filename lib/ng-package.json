@@ -1,0 +1,8 @@
+{
+  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../dist/swift-layout",
+  "deleteDestPath": true,
+  "lib": {
+    "entryFile": "components/public-api.ts"
+  }
+}
