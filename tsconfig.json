@@ -1,10 +1,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "paths": {
       "swift-layout/*": [ "lib/*/public-api" ]
     },
-    "outDir": "./dist/out-tsc",
+    "outDir": "dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,

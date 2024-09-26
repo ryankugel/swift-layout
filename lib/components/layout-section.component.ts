@@ -24,7 +24,6 @@ type PaneType = "first" | "last";
 @Component( {
   selector: "swift-layout-section",
   templateUrl: "layout-section.component.html",
-  styleUrl: "layout-section.component.css",
   animations: [
     trigger( "toggle", [
       state(
@@ -290,7 +289,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    * @param {PaneType} pane
    */
   getGutterClass( pane: PaneType ): string {
-    return `layout-pane-gutter gutter-${ pane }`;
+    return `layout-pane-gutter gutter-${ pane } layout-component`;
   }
 
   /**

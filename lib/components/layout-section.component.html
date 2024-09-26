@@ -1,4 +1,4 @@
-<div #section class="layout-component layout-pane-section" [ngStyle]="style"
+<div #section class="layout-pane-section layout-component" [ngStyle]="style"
      [ngClass]="{
        'layout-horizontal': orientation === 'horizontal',
        'layout-vertical': orientation === 'vertical'
@@ -6,7 +6,7 @@
 
   <!-- First pane -->
   @if( firstPaneTemplate ) {
-    <div #firstPane class="layout-pane-content"
+    <div #firstPane class="layout-pane-content layout-component"
          [@toggle]="{ value: firstPaneVisible, params: { paneSize: getPaneSize( 'first' ) } }">
       <ng-container *ngTemplateOutlet="firstPaneTemplate"></ng-container>
     </div>
@@ -19,7 +19,7 @@
   }
 
   <!-- Middle pane -->
-  <div #middlePane class="layout-pane-content middle-pane">
+  <div #middlePane class="layout-pane-content middle-pane layout-component">
     <ng-container *ngTemplateOutlet="middlePaneTemplate"></ng-container>
   </div>
 
@@ -31,7 +31,7 @@
                     'paneVisible': lastPaneVisible
                   }"></ng-container>
 
-    <div #lastPane class="layout-pane-content"
+    <div #lastPane class="layout-pane-content layout-component"
          [@toggle]="{ value: lastPaneVisible, params: { paneSize: getPaneSize( 'last' ) } }">
       <ng-container *ngTemplateOutlet="lastPaneTemplate"></ng-container>
     </div>
@@ -44,7 +44,7 @@
   <div #gutter [class]="getGutterClass( pane )" role="separator"
        [ngClass]="{ 'gutter-collapsed': !paneVisible }"
        (mousedown)="onGutterMouseDown( $event, pane, paneVisible )">
-    <button type="button" class="layout-pane-gutter-toggle"
+    <button type="button" class="layout-pane-gutter-toggle layout-component"
             (click)="onGutterHandleClick( pane )" [ngStyle]="getGutterStyle()">
       @if( orientation === "horizontal" ) {
         <svg class="gutter-icon horizontal" [ngClass]="{ 'last': pane === 'last' }" height="20" width="12" viewBox="0 -960 720 800">

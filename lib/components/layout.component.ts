@@ -9,7 +9,6 @@ import { LayoutSectionComponent } from "./layout-section.component";
 @Component( {
   selector: "swift-layout",
   templateUrl: "layout.component.html",
-  styleUrl: "layout.component.css",
   standalone: true,
   imports: [
     NgTemplateOutlet,

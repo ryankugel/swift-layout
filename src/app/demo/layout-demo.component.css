@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.pane-content-demo {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
