@@ -55,54 +55,49 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
   @Input() orientation: LayoutOrientation = "horizontal";
 
   /**
-   * Custom CSS to apply to the container.
-   */
-  @Input() style: { [key: string]: any } = {};
-
-  /**
    * The size in pixels of the resize bar (the gutter).
    */
-  @Input() gutterSize: number = 12;
+  @Input() gutterSize: number;
 
   /**
    * The initial size of the first pane as a percentage.
    */
-  @Input() firstPaneSize: number = 25;
+  @Input() firstPaneSize: number;
 
   /**
    * The initial size of the last pane as a percentage.
    */
-  @Input() lastPaneSize: number = 25;
+  @Input() lastPaneSize: number;
 
   /**
    * The minimum size of the first pane as a percentage.
    */
-  @Input() minFirstPaneSize: number = 5;
+  @Input() minFirstPaneSize: number;
 
   /**
    * The minimum size of the last pane as a percentage.
    */
-  @Input() minLastPaneSize: number = 5;
+  @Input() minLastPaneSize: number;
 
   /**
    * The maximum size of the first pane as a percentage.
    */
-  @Input() maxFirstPaneSize: number = 40;
+  @Input() maxFirstPaneSize: number;
 
   /**
    * The maximum size of the last pane as a percentage.
    */
-  @Input() maxLastPaneSize: number = 40;
+  @Input() maxLastPaneSize: number;
 
   /**
    * Key used to save the state of the layout.
    */
-  @Input() stateKey: string = null;
+  @Input() stateKey: string;
 
   /**
    * Defines where state is stored, either 'session' or 'local'.
    */
-  @Input() stateStorage: StateStorage = "session";
+  @Input() stateStorage: StateStorage;
 
   @ContentChild( FirstPane ) firstPaneChild: FirstPane;
   @ContentChild( MiddlePane ) middlePaneChild: MiddlePane;
@@ -278,10 +273,11 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
   /**
    * Returns styling for the gutter handle, depending on the orientation of the layout.
    */
-  getGutterStyle(): { width?: string, height?: string } {
+  getGutterStyle(): { width?: string, height?: string, "border-radius": string } {
+    const borderRadius = Math.round( this.gutterSize / 2 );
     return this.isHorizontal()
-      ? { width: `${ this.gutterSize }px` }
-      : { height: `${ this.gutterSize }px` };
+      ? { width: `${ this.gutterSize }px`, "border-radius": `${ borderRadius }px` }
+      : { height: `${ this.gutterSize }px`, "border-radius": `${ borderRadius }px` };
   }
 
   /**
@@ -290,6 +286,13 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    */
   getGutterClass( pane: PaneType ): string {
     return `layout-pane-gutter gutter-${ pane } layout-component`;
+  }
+
+  /**
+   * Returns styling for the gutter icon.
+   */
+  getGutterIconStyle(): { width: string, height: string } {
+    return { width: `${ this.gutterSize }px`, height: `${ this.gutterSize }px` };
   }
 
   /**

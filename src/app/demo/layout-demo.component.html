@@ -1,13 +1,14 @@
-<swift-layout>
+<swift-layout stateKey="exampleLayout" [gutterSize]="16" stateStorage="local"
+              [style]="{ backgroundColor: '#dddddd', border: '1px solid #b6bbc3', borderRadius: '2em' }">
+  <ng-template pane="left" [size]="30" [minSize]="10" [maxSize]="45">
+    <div class="pane-content-demo">Left Pane</div>
+  </ng-template>
+
   <ng-template pane="center">
     <div class="pane-content-demo">Center Pane</div>
   </ng-template>
 
-  <ng-template pane="bottom">
+  <ng-template pane="bottom" [size]="20" [minSize]="10" [maxSize]="45">
     <div class="pane-content-demo">Bottom Pane</div>
-  </ng-template>
-
-  <ng-template pane="left">
-    <div class="pane-content-demo">Left Pane</div>
   </ng-template>
 </swift-layout>

@@ -1,42 +1,50 @@
-<swift-layout-section orientation="vertical">
+<div class="swift-layout layout-component" [ngStyle]="style">
+  <swift-layout-section orientation="vertical" [gutterSize]="gutterSize"
+                        [stateKey]="getStateKey( 'vertical' )" [stateStorage]="stateStorage"
+                        [firstPaneSize]="topPaneSize" [minFirstPaneSize]="topPaneMinSize" [maxFirstPaneSize]="topPaneMaxSize"
+                        [lastPaneSize]="bottomPaneSize" [minLastPaneSize]="bottomPaneMinSize" [maxLastPaneSize]="bottomPaneMaxSize">
 
-  @if( topPaneTemplate ) {
-    <ng-template firstPane>
-      <ng-container *ngTemplateOutlet="topPaneTemplate"></ng-container>
-    </ng-template>
-  }
-
-  <ng-template middlePane>
-    @if( leftPaneTemplate || rightPaneTemplate ) {
-      <swift-layout-section orientation="horizontal">
-
-        @if( leftPaneTemplate ) {
-          <ng-template firstPane>
-            <ng-container *ngTemplateOutlet="leftPaneTemplate"></ng-container>
-          </ng-template>
-        }
-
-        <ng-template middlePane>
-          <ng-container *ngTemplateOutlet="centerPaneTemplate"></ng-container>
-        </ng-template>
-
-        @if( rightPaneTemplate ) {
-          <ng-template lastPane>
-            <ng-container *ngTemplateOutlet="rightPaneTemplate"></ng-container>
-          </ng-template>
-        }
-
-      </swift-layout-section>
+    @if( topPaneTemplate ) {
+      <ng-template firstPane>
+        <ng-container *ngTemplateOutlet="topPaneTemplate"></ng-container>
+      </ng-template>
     }
-    @else {
-      <ng-container *ngTemplateOutlet="centerPaneTemplate"></ng-container>
-    }
-  </ng-template>
 
-  @if( bottomPaneTemplate ) {
-    <ng-template lastPane>
-      <ng-container *ngTemplateOutlet="bottomPaneTemplate"></ng-container>
+    <ng-template middlePane>
+      @if( leftPaneTemplate || rightPaneTemplate ) {
+        <swift-layout-section orientation="horizontal" [gutterSize]="gutterSize"
+                              [stateKey]="getStateKey( 'horizontal' )" [stateStorage]="stateStorage"
+                              [firstPaneSize]="leftPaneSize" [minFirstPaneSize]="leftPaneMinSize" [maxFirstPaneSize]="leftPaneMaxSize"
+                              [lastPaneSize]="rightPaneSize" [minLastPaneSize]="rightPaneMinSize" [maxLastPaneSize]="rightPaneMaxSize">
+
+          @if( leftPaneTemplate ) {
+            <ng-template firstPane>
+              <ng-container *ngTemplateOutlet="leftPaneTemplate"></ng-container>
+            </ng-template>
+          }
+
+          <ng-template middlePane>
+            <ng-container *ngTemplateOutlet="centerPaneTemplate"></ng-container>
+          </ng-template>
+
+          @if( rightPaneTemplate ) {
+            <ng-template lastPane>
+              <ng-container *ngTemplateOutlet="rightPaneTemplate"></ng-container>
+            </ng-template>
+          }
+
+        </swift-layout-section>
+      }
+      @else {
+        <ng-container *ngTemplateOutlet="centerPaneTemplate"></ng-container>
+      }
     </ng-template>
-  }
 
-</swift-layout-section>
+    @if( bottomPaneTemplate ) {
+      <ng-template lastPane>
+        <ng-container *ngTemplateOutlet="bottomPaneTemplate"></ng-container>
+      </ng-template>
+    }
+
+  </swift-layout-section>
+</div>

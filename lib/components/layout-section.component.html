@@ -1,4 +1,4 @@
-<div #section class="layout-pane-section layout-component" [ngStyle]="style"
+<div #section class="layout-pane-section layout-component"
      [ngClass]="{
        'layout-horizontal': orientation === 'horizontal',
        'layout-vertical': orientation === 'vertical'
@@ -46,26 +46,25 @@
        (mousedown)="onGutterMouseDown( $event, pane, paneVisible )">
     <button type="button" class="layout-pane-gutter-toggle layout-component"
             (click)="onGutterHandleClick( pane )" [ngStyle]="getGutterStyle()">
-      @if( orientation === "horizontal" ) {
-        <svg class="gutter-icon horizontal" [ngClass]="{ 'last': pane === 'last' }" height="20" width="12" viewBox="0 -960 720 800">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" class="gutter-icon"
+           [ngStyle]="getGutterIconStyle()" [ngClass]="{ 'last': pane === 'last' }">
+        @if( orientation === "horizontal" ) {
           @if( paneVisible ) {
-            <path d="M 287.02701,-560.00018 660,-974.0012 546.48649,-1100 60,-560.00018 546.48649,-20 660,-146.00017 Z" />
+            <path d="M 337.60563,480 100,240 337.60563,0 380,42.82158 184.78873,240 380,437.17842 Z" />
           }
           @else {
-            <path d="M 432.97299,-560.00018 60,-974.0012 173.51351,-1100 660,-560.00018 173.51351,-20 60,-146.00017 Z" />
+            <path d="M 295.21127,240 100,42.821577 142.39437,0 380,240 142.39437,480 100,437.17842 Z" />
           }
-        </svg>
-      }
-      @else {
-        <svg class="gutter-icon vertical" [ngClass]="{ 'last': pane === 'last' }" height="12" width="20" viewBox="0 -960 1200 480">
+        }
+        @else {
           @if( paneVisible ) {
-            <path d="M 600.00018,-792.97299 1014.0012,-420 1140,-533.51351 600.00018,-1020 60,-533.51351 186.00017,-420 Z" />
+            <path d="M 240,185.08834 43,380 0,337.45583 240,100 480,337.45583 437,380 Z" />
           }
           @else {
-            <path d="M 600.00018,-647.02701 1014.0012,-1020 1140,-906.48649 600.00018,-420 60,-906.48649 186.00017,-1020 Z" />
+            <path d="M 240,380 0,142.54417 43,100 240,294.91166 437,100 l 43,42.54417 z" />
           }
-        </svg>
-      }
+        }
+      </svg>
     </button>
   </div>
 </ng-template>

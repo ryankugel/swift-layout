@@ -9,7 +9,12 @@ export class Pane {
 
   @Input( "pane" ) pane: PaneRegion;
 
-  // TODO: RYAN - can we get a type for this or no?
+  @Input( "size" ) size: number = 25;
+
+  @Input( "minSize" ) minSize: number = 5;
+
+  @Input( "maxSize" ) maxSize: number = 50;
+
   constructor( public template: TemplateRef<any> ) {
   }
 
