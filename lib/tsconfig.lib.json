@@ -5,13 +5,24 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "stripInternal": true,
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "types": [],
+    "paths": {
+      "swift-layout/*": [ "./*/public_api" ]
+    },
+    "lib": [
+      "es2022",
+      "dom"
+    ]
   },
   "exclude": [
     "**/*.spec.ts"
   ],
   "files": [
-    "./components/public-api.ts"
+    "./public_api.ts"
   ],
   "angularCompilerOptions": {
     "flatModuleOutFile": "swift-layout.js",

@@ -1,6 +1,11 @@
 {
   "name": "swift-layout",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryankugel/swift-layout.git"
+  },
+  "license": "GPL-3.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve swift-layout-demo",

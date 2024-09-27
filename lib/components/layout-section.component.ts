@@ -16,10 +16,18 @@ import {
 import { FirstPane } from "../directives/first-pane.directive";
 import { LastPane } from "../directives/last-pane.directive";
 import { MiddlePane } from "../directives/middle-pane.directive";
-import { LayoutOrientation, SavedState, StateStorage, VoidListener } from "../models/layout.model";
-import { LayoutUtil } from "../util/layout.util";
+import { LayoutOrientation, StateStorage } from "../models/layout.model";
+
+type VoidListener = VoidFunction | null | undefined;
 
 type PaneType = "first" | "last";
+
+interface SavedState {
+  firstPaneSize?: number;
+  lastPaneSize?: number;
+  firstPaneVisible?: boolean;
+  lastPaneVisible?: boolean;
+}
 
 @Component( {
   selector: "swift-layout-section",
@@ -174,8 +182,8 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     // Get the initial sizes of panes in pixels
     const sectionEl = this.elRef.nativeElement.querySelector( ".layout-pane-section" );
     this.resizeModel.sectionSize = this.isHorizontal()
-      ? LayoutUtil.getWidth( sectionEl )
-      : LayoutUtil.getHeight( sectionEl );
+      ? this.getElementWidth( sectionEl )
+      : this.getElementHeight( sectionEl );
     const sectionSize = this.resizeModel.sectionSize;
     this.calculatePixelSizes( sectionSize );
   }
@@ -189,7 +197,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
 
     this.gutterViewChildren.forEach( gutterElRef => {
       let gutterEl: HTMLElement = gutterElRef.nativeElement;
-      if( LayoutUtil.hasClass( gutterEl, "gutter-first" ) ) {
+      if( this.hasStyleClass( gutterEl, "gutter-first" ) ) {
         this.firstGutterEl = gutterEl;
       }
       else {
@@ -230,14 +238,14 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    * @param {boolean} paneVisible
    */
   onGutterMouseDown( event: MouseEvent, pane: PaneType, paneVisible: boolean ) {
-    if( event.button !== 0 || !paneVisible || !LayoutUtil.hasClass( event.target as HTMLElement, "layout-pane-gutter" ) ) {
+    if( event.button !== 0 || !paneVisible || !this.hasStyleClass( event.target as HTMLElement, "layout-pane-gutter" ) ) {
       return;
     }
 
     // Initialize variables for handling the resize
     this.resizeModel.sectionSize = this.isHorizontal()
-      ? LayoutUtil.getWidth( this.sectionEl )
-      : LayoutUtil.getHeight( this.sectionEl );
+      ? this.getElementWidth( this.sectionEl )
+      : this.getElementHeight( this.sectionEl );
     this.resizeModel.dragging = true;
     this.resizeModel.startPos = this.isHorizontal() ? event.pageX : event.pageY;
     this.resizeModel.firstPaneSize = this.calculatePaneSize( this.firstPaneEl );
@@ -247,8 +255,8 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
 
     // Update element classes for resize
     let gutterEl = pane === "first" ? this.firstGutterEl : this.lastGutterEl;
-    LayoutUtil.addClass( this.sectionEl, "pane-resizing" );
-    LayoutUtil.addClass( gutterEl, "pane-gutter-resizing" );
+    this.addStyleClass( this.sectionEl, "pane-resizing" );
+    this.addStyleClass( gutterEl, "pane-gutter-resizing" );
 
     this.bindMouseListeners();
   }
@@ -320,8 +328,8 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
 
     // If the new sizes for panes are valid, update the pane sizes (which automatically updates the elements)
     if( this.validateResize( newFirstPaneSize, newLastPaneSize ) ) {
-      if( LayoutUtil.hasClass( gutterEl, "invalid-resize" ) ) {
-        LayoutUtil.removeClass( gutterEl, "invalid-resize" );
+      if( this.hasStyleClass( gutterEl, "invalid-resize" ) ) {
+        this.removeStyleClass( gutterEl, "invalid-resize" );
       }
 
       this.firstPanePixelSize = newFirstPaneSize;
@@ -331,8 +339,8 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     // When the resize is invalid, adjust the gutter to indicate it's reached the limit
     else {
       const gutterEl = this.resizeModel.paneResizing === "first" ? this.firstGutterEl : this.lastGutterEl;
-      if( !LayoutUtil.hasClass( gutterEl, "invalid-resize" ) ) {
-        LayoutUtil.addClass( gutterEl, "invalid-resize" );
+      if( !this.hasStyleClass( gutterEl, "invalid-resize" ) ) {
+        this.addStyleClass( gutterEl, "invalid-resize" );
       }
     }
   }
@@ -347,8 +355,8 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     }
 
     let gutterEl = this.resizeModel.paneResizing === "first" ? this.firstGutterEl : this.lastGutterEl;
-    LayoutUtil.removeClass( gutterEl, "pane-gutter-resizing" );
-    LayoutUtil.removeClass( this.sectionEl, "pane-resizing" );
+    this.removeStyleClass( gutterEl, "pane-gutter-resizing" );
+    this.removeStyleClass( this.sectionEl, "pane-resizing" );
 
     this.resetResizeModel();
   }
@@ -446,8 +454,8 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     }
 
     return ( 100 * ( this.isHorizontal()
-      ? LayoutUtil.getOuterWidth( paneEl, true )
-      : LayoutUtil.getOuterHeight( paneEl, true ) ) ) / this.resizeModel.sectionSize;
+      ? this.getElementOuterWidth( paneEl, true )
+      : this.getElementOuterHeight( paneEl, true ) ) ) / this.resizeModel.sectionSize;
   }
 
   /**
@@ -587,6 +595,119 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     return this.stateStorage === "local"
       ? this.window.localStorage
       : this.window.sessionStorage;
+  }
+
+  /**
+   * Returns the width of the given element, accounting for padding and borders.
+   * @param {HTMLElement} element
+   * @private
+   */
+  private getElementWidth( element: HTMLElement ): number {
+    let width = element.offsetWidth;
+    let style = getComputedStyle( element );
+
+    width -= parseFloat( style.paddingLeft ) + parseFloat( style.paddingRight ) + parseFloat( style.borderLeftWidth ) + parseFloat( style.borderRightWidth );
+    return width;
+  }
+
+  /**
+   * Returns the height of the given element, accounting for padding and borders.
+   * @param {HTMLElement} element
+   * @private
+   */
+  private getElementHeight( element: HTMLElement ): number {
+    let height = element.offsetHeight;
+    let style = getComputedStyle( element );
+
+    height -= parseFloat( style.paddingTop ) + parseFloat( style.paddingBottom ) + parseFloat( style.borderTopWidth ) + parseFloat( style.borderBottomWidth );
+    return height;
+  }
+
+  /**
+   * Returns the outer width of the given element, optionally accounting for margins.
+   * @param {HTMLElement} element
+   * @param {boolean} includeMargin
+   * @private
+   */
+  private getElementOuterWidth( element: HTMLElement, includeMargin: boolean = false ): number {
+    let width = element.offsetWidth;
+
+    if( includeMargin ) {
+      let style = getComputedStyle( element );
+      width += parseFloat( style.marginLeft ) + parseFloat( style.marginRight );
+    }
+
+    return width;
+  }
+
+  /**
+   * Returns the outer height of the given element, optionally accounting for margins.
+   * @param {HTMLElement} element
+   * @param {boolean} includeMargin
+   * @private
+   */
+  private getElementOuterHeight( element: HTMLElement, includeMargin: boolean = false ): number {
+    let height = element.offsetHeight;
+
+    if( includeMargin ) {
+      let style = getComputedStyle( element );
+      height += parseFloat( style.marginTop ) + parseFloat( style.marginBottom );
+    }
+
+    return height;
+  }
+
+  /**
+   * Returns whether the given element has the given CSS class.
+   * @param {HTMLElement} element
+   * @param {string} className
+   * @private
+   */
+  private hasStyleClass( element: HTMLElement, className: string ): boolean {
+    if( element && className ) {
+      if( element.classList ) {
+        return element.classList.contains( className );
+      }
+      else {
+        return new RegExp( "(^| )" + className + "( |$)", "gi" ).test( element.className );
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Adds the given CSS class to the given element.
+   * @param {HTMLElement} element
+   * @param {string} className
+   * @private
+   */
+  private addStyleClass( element: HTMLElement, className: string ) {
+    if( element && className ) {
+      if( element.classList ) {
+        element.classList.add( className );
+      }
+      else {
+        element.className += " " + className;
+      }
+    }
+  }
+
+  /**
+   * Removes the given CSS class from the given element.
+   * @param {HTMLElement} element
+   * @param {string} className
+   * @private
+   */
+  private removeStyleClass( element: HTMLElement, className: string ) {
+    if( element && className ) {
+      if( element.classList ) {
+        element.classList.remove( className );
+      }
+      else {
+        element.className = element.className.replace( new RegExp( "(^|\\b)" + className.split( " " ).join( "|" ) + "(\\b|$)", "gi" ), " " );
+      }
+    }
   }
 
 }

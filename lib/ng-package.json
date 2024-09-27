@@ -3,6 +3,9 @@
   "dest": "../dist/swift-layout",
   "deleteDestPath": true,
   "lib": {
-    "entryFile": "components/public-api.ts"
-  }
+    "entryFile": "./public_api.ts"
+  },
+  "assets": [
+    "./assets/*"
+  ]
 }
