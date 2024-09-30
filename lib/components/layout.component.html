@@ -1,6 +1,6 @@
 <div class="swift-layout layout-component" [ngStyle]="style">
-  <swift-layout-section orientation="vertical" [gutterSize]="gutterSize"
-                        [stateKey]="getStateKey( 'vertical' )" [stateStorage]="stateStorage"
+  <swift-layout-section orientation="vertical" [stateKey]="getStateKey( 'vertical' )" [stateStorage]="stateStorage"
+                        [gutterSize]="gutterSize" [gutterToggleSize]="gutterToggleSize" [gutterToggleClosedSize]="gutterToggleClosedSize"
                         [firstPaneSize]="topPaneSize" [minFirstPaneSize]="topPaneMinSize" [maxFirstPaneSize]="topPaneMaxSize"
                         [lastPaneSize]="bottomPaneSize" [minLastPaneSize]="bottomPaneMinSize" [maxLastPaneSize]="bottomPaneMaxSize">
 
@@ -12,8 +12,8 @@
 
     <ng-template middlePane>
       @if( leftPaneTemplate || rightPaneTemplate ) {
-        <swift-layout-section orientation="horizontal" [gutterSize]="gutterSize"
-                              [stateKey]="getStateKey( 'horizontal' )" [stateStorage]="stateStorage"
+        <swift-layout-section orientation="horizontal" [stateKey]="getStateKey( 'horizontal' )" [stateStorage]="stateStorage"
+                              [gutterSize]="gutterSize" [gutterToggleSize]="gutterToggleSize" [gutterToggleClosedSize]="gutterToggleClosedSize"
                               [firstPaneSize]="leftPaneSize" [minFirstPaneSize]="leftPaneMinSize" [maxFirstPaneSize]="leftPaneMaxSize"
                               [lastPaneSize]="rightPaneSize" [minLastPaneSize]="rightPaneMinSize" [maxLastPaneSize]="rightPaneMaxSize">
 

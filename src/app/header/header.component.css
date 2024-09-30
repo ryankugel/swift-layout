@@ -1,0 +1,13 @@
+.header-container {
+  background-color: #555;
+  border: 1px solid #222;
+  height: 3em;
+  line-height: 3em;
+}
+
+.header-container > span.title {
+  color: #dedede;
+  font-weight: bold;
+  padding-left: 1em;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}

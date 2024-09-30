@@ -107,12 +107,4 @@
   .pane-gutter-resizing .layout-pane-gutter-toggle {
     opacity: 0;
   }
-
-  .layout-horizontal > .layout-pane-gutter > .layout-pane-gutter-toggle {
-    height: 65px;
-  }
-
-  .layout-vertical > .layout-pane-gutter > .layout-pane-gutter-toggle {
-    width: 65px;
-  }
 }

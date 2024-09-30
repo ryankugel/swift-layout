@@ -4,6 +4,11 @@
   width: 100%;
 }
 
+.layout-demo {
+  height: 100%;
+  width: 100%;
+}
+
 .pane-content-demo {
   align-items: center;
   display: flex;

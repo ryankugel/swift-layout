@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { LayoutComponent } from "../../../lib/components/layout.component";
 import { Pane } from "../../../lib/directives/pane.directive";
+import { HeaderComponent } from "../header/header.component";
 
 @Component( {
   selector: "swift-layout-demo",
@@ -9,7 +10,8 @@ import { Pane } from "../../../lib/directives/pane.directive";
   standalone: true,
   imports: [
     LayoutComponent,
-    Pane
+    Pane,
+    HeaderComponent
   ]
 } )
 export class LayoutDemoComponent {}

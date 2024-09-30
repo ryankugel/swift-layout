@@ -4,7 +4,7 @@ import { FirstPane } from "../directives/first-pane.directive";
 import { LastPane } from "../directives/last-pane.directive";
 import { MiddlePane } from "../directives/middle-pane.directive";
 import { Pane } from "../directives/pane.directive";
-import { LayoutOrientation, StateStorage } from "../models/layout.model";
+import { LayoutOrientation, PaneRegion, StateStorage } from "../models/layout.model";
 import { LayoutSectionComponent } from "./layout-section.component";
 
 @Component( {
@@ -31,6 +31,16 @@ export class LayoutComponent implements AfterContentInit {
    * The size in pixels of the resize bar (the gutter).
    */
   @Input() gutterSize: number = 14;
+
+  /**
+   * The size in pixels of the resize bar toggle button.
+   */
+  @Input() gutterToggleSize: number = 65;
+
+  /**
+   * The size in pixels of the resize bar toggle button when the pane is closed.
+   */
+  @Input() gutterToggleClosedSize: number = 65;
 
   /**
    * Key used to save the state of the layout.
@@ -70,31 +80,56 @@ export class LayoutComponent implements AfterContentInit {
     this.templates.forEach( item => {
       switch( item.getPaneRegion() ) {
         case "center":
-          this.centerPaneTemplate = item.template;
+          if( !this.centerPaneTemplate ) {
+            this.centerPaneTemplate = item.template;
+          }
+          else {
+            this.logDuplicatePane( "center" );
+          }
           break;
         case "top":
-          this.topPaneSize = item.size;
-          this.topPaneMinSize = item.minSize;
-          this.topPaneMaxSize = item.maxSize;
-          this.topPaneTemplate = item.template;
+          if( !this.topPaneTemplate ) {
+            this.topPaneSize = item.size;
+            this.topPaneMinSize = item.minSize;
+            this.topPaneMaxSize = item.maxSize;
+            this.topPaneTemplate = item.template;
+          }
+          else {
+            this.logDuplicatePane( "top" );
+          }
           break;
         case "bottom":
-          this.bottomPaneSize = item.size;
-          this.bottomPaneMinSize = item.minSize;
-          this.bottomPaneMaxSize = item.maxSize;
-          this.bottomPaneTemplate = item.template;
+          if( !this.bottomPaneTemplate ) {
+            this.bottomPaneSize = item.size;
+            this.bottomPaneMinSize = item.minSize;
+            this.bottomPaneMaxSize = item.maxSize;
+            this.bottomPaneTemplate = item.template;
+          }
+          else {
+            this.logDuplicatePane( "bottom" );
+          }
           break;
         case "left":
-          this.leftPaneSize = item.size;
-          this.leftPaneMinSize = item.minSize;
-          this.leftPaneMaxSize = item.maxSize;
-          this.leftPaneTemplate = item.template;
+          if( !this.leftPaneTemplate ) {
+            this.leftPaneSize = item.size;
+            this.leftPaneMinSize = item.minSize;
+            this.leftPaneMaxSize = item.maxSize;
+            this.leftPaneTemplate = item.template;
+          }
+          else {
+            this.logDuplicatePane( "left" );
+          }
           break;
         case "right":
-          this.rightPaneSize = item.size;
-          this.rightPaneMinSize = item.minSize;
-          this.rightPaneMaxSize = item.maxSize;
-          this.rightPaneTemplate = item.template;
+          if( !this.rightPaneTemplate ) {
+            this.rightPaneSize = item.size;
+            this.rightPaneMinSize = item.minSize;
+            this.rightPaneMaxSize = item.maxSize;
+            this.rightPaneTemplate = item.template;
+          }
+          else {
+            this.logDuplicatePane( "right" );
+          }
           break;
       }
     } );
@@ -105,6 +140,10 @@ export class LayoutComponent implements AfterContentInit {
       return null;
     }
     return `${ this.stateKey }_${ orientation }`;
+  }
+
+  private logDuplicatePane( pane: PaneRegion ) {
+    console.error( `Duplicate pane found: "${ pane }", ignoring the duplicate.` );
   }
 
 }

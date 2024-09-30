@@ -29,6 +29,12 @@ interface SavedState {
   lastPaneVisible?: boolean;
 }
 
+interface GutterStyle {
+  width?: string;
+  height?: string;
+  borderRadius: string;
+}
+
 @Component( {
   selector: "swift-layout-section",
   templateUrl: "layout-section.component.html",
@@ -66,6 +72,16 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    * The size in pixels of the resize bar (the gutter).
    */
   @Input() gutterSize: number;
+
+  /**
+   * The size in pixels of the resize bar toggle button.
+   */
+  @Input() gutterToggleSize: number;
+
+  /**
+   * The size in pixels of the resize bar toggle button when the pane is closed.
+   */
+  @Input() gutterToggleClosedSize: number;
 
   /**
    * The initial size of the first pane as a percentage.
@@ -181,9 +197,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
 
     // Get the initial sizes of panes in pixels
     const sectionEl = this.elRef.nativeElement.querySelector( ".layout-pane-section" );
-    this.resizeModel.sectionSize = this.isHorizontal()
-      ? this.getElementWidth( sectionEl )
-      : this.getElementHeight( sectionEl );
+    this.resizeModel.sectionSize = this.getSectionSize( sectionEl );
     const sectionSize = this.resizeModel.sectionSize;
     this.calculatePixelSizes( sectionSize );
   }
@@ -205,7 +219,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
       }
     } );
 
-    new ResizeObserver( data => this.onSectionResize( data[ 0 ]?.contentRect ) )
+    new ResizeObserver( () => this.onSectionResize() )
       .observe( this.sectionEl );
   }
 
@@ -243,9 +257,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     }
 
     // Initialize variables for handling the resize
-    this.resizeModel.sectionSize = this.isHorizontal()
-      ? this.getElementWidth( this.sectionEl )
-      : this.getElementHeight( this.sectionEl );
+    this.resizeModel.sectionSize = this.getSectionSize( this.sectionEl );
     this.resizeModel.dragging = true;
     this.resizeModel.startPos = this.isHorizontal() ? event.pageX : event.pageY;
     this.resizeModel.firstPaneSize = this.calculatePaneSize( this.firstPaneEl );
@@ -281,11 +293,25 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
   /**
    * Returns styling for the gutter handle, depending on the orientation of the layout.
    */
-  getGutterStyle(): { width?: string, height?: string, "border-radius": string } {
+  getGutterStyle( pane: PaneType ): GutterStyle {
     const borderRadius = Math.round( this.gutterSize / 2 );
-    return this.isHorizontal()
-      ? { width: `${ this.gutterSize }px`, "border-radius": `${ borderRadius }px` }
-      : { height: `${ this.gutterSize }px`, "border-radius": `${ borderRadius }px` };
+    const paneVisible = pane === "first" ? this.firstPaneVisible : this.lastPaneVisible;
+    const toggleSize = paneVisible ? this.gutterToggleSize : this.gutterToggleClosedSize;
+
+    const style: GutterStyle = {
+      borderRadius: `${ borderRadius }px`
+    };
+
+    if( this.isHorizontal() ) {
+      style.width = `${ this.gutterSize }px`;
+      style.height = `${ toggleSize }px`;
+    }
+    else {
+      style.width = `${ toggleSize }px`;
+      style.height = `${ this.gutterSize }px`;
+    }
+
+    return style;
   }
 
   /**
@@ -460,14 +486,13 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
 
   /**
    * React to the section being resized and resize panes to maintain their current size as a percentage.
-   * @param {DOMRectReadOnly} rect
    */
-  private onSectionResize( rect: DOMRectReadOnly ) {
+  private onSectionResize() {
     if( !this.resizeModel.sectionSize ) {
       return;
     }
 
-    const newSize = this.isHorizontal() ? rect.width : rect.height;
+    const newSize = this.getSectionSize();
 
     // Only handle resize events that we haven't adjusted pane sizes to yet.
     if( newSize === this.resizeModel.sectionSize ) {
@@ -483,6 +508,17 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     this.setPaneSize( this.firstPaneEl, this.firstPanePixelSize );
     this.setPaneSize( this.lastPaneEl, this.lastPanePixelSize );
     this.resizeModel.sectionSize = newSize;
+  }
+
+  /**
+   * Returns the section size based on the given element and orientation.
+   * @param {HTMLElement} sectionEl
+   * @private
+   */
+  private getSectionSize( sectionEl: HTMLElement = this.sectionEl ): number {
+    return this.isHorizontal()
+      ? this.getElementWidth( sectionEl )
+      : this.getElementHeight( sectionEl );
   }
 
   /**
