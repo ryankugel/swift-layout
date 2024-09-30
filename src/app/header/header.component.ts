@@ -4,8 +4,7 @@ import { Component, Input } from "@angular/core";
   selector: "swift-layout-demo-header",
   templateUrl: "header.component.html",
   styleUrl: "header.component.css",
-  standalone: true,
-  imports: []
+  standalone: true
 } )
 export class HeaderComponent {
 

@@ -40,7 +40,7 @@ export class LayoutComponent implements AfterContentInit {
   /**
    * The size in pixels of the resize bar toggle button when the pane is closed.
    */
-  @Input() gutterToggleClosedSize: number = 65;
+  @Input() gutterToggleSizeClosed: number = 65;
 
   /**
    * Key used to save the state of the layout.

@@ -10,8 +10,8 @@ import { HeaderComponent } from "../header/header.component";
   standalone: true,
   imports: [
     LayoutComponent,
+    HeaderComponent,
     Pane,
-    HeaderComponent
   ]
 } )
 export class LayoutDemoComponent {}

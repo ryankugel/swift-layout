@@ -60,7 +60,7 @@
     "no-undef": "off",
     "no-unused-vars": "off",
     "object-curly-spacing": [ "error", "always" ],
-    "prefer-const": "off",
+//    "prefer-const": "off",
     "quotes": [ 1, "double" ],
     "quote-props": [ 1, "as-needed" ],
     "semi": "error",

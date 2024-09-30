@@ -81,7 +81,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
   /**
    * The size in pixels of the resize bar toggle button when the pane is closed.
    */
-  @Input() gutterToggleClosedSize: number;
+  @Input() gutterToggleSizeClosed: number;
 
   /**
    * The initial size of the first pane as a percentage.
@@ -136,16 +136,16 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
   // ViewChildren for the gutters
   @ViewChildren( "gutter" ) gutterViewChildren: QueryList<ElementRef>;
 
-  firstPaneTemplate: TemplateRef<any>;
-  middlePaneTemplate: TemplateRef<any>;
-  lastPaneTemplate: TemplateRef<any>;
+  protected firstPaneTemplate: TemplateRef<any>;
+  protected middlePaneTemplate: TemplateRef<any>;
+  protected lastPaneTemplate: TemplateRef<any>;
 
   // The visibility state of the collapsible panes
-  firstPaneVisible: boolean = true;
-  lastPaneVisible: boolean = true;
+  protected firstPaneVisible: boolean = true;
+  protected lastPaneVisible: boolean = true;
 
   // Variables to track pane resizing
-  resizeModel = {
+  private resizeModel = {
     dragging: false,
     sectionSize: null as number,
     startPos: null as number,
@@ -210,7 +210,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     this.lastPaneEl = this.lastPaneViewChild?.nativeElement;
 
     this.gutterViewChildren.forEach( gutterElRef => {
-      let gutterEl: HTMLElement = gutterElRef.nativeElement;
+      const gutterEl: HTMLElement = gutterElRef.nativeElement;
       if( this.hasStyleClass( gutterEl, "gutter-first" ) ) {
         this.firstGutterEl = gutterEl;
       }
@@ -266,7 +266,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     this.resizeModel.paneResizing = pane;
 
     // Update element classes for resize
-    let gutterEl = pane === "first" ? this.firstGutterEl : this.lastGutterEl;
+    const gutterEl = pane === "first" ? this.firstGutterEl : this.lastGutterEl;
     this.addStyleClass( this.sectionEl, "pane-resizing" );
     this.addStyleClass( gutterEl, "pane-gutter-resizing" );
 
@@ -296,7 +296,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
   getGutterStyle( pane: PaneType ): GutterStyle {
     const borderRadius = Math.round( this.gutterSize / 2 );
     const paneVisible = pane === "first" ? this.firstPaneVisible : this.lastPaneVisible;
-    const toggleSize = paneVisible ? this.gutterToggleSize : this.gutterToggleClosedSize;
+    const toggleSize = paneVisible ? this.gutterToggleSize : this.gutterToggleSizeClosed;
 
     const style: GutterStyle = {
       borderRadius: `${ borderRadius }px`
@@ -335,7 +335,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    * @private
    */
   private onResize( event: MouseEvent ) {
-    let newPos = this.isHorizontal()
+    const newPos = this.isHorizontal()
       ? event.pageX - this.resizeModel.startPos
       : event.pageY - this.resizeModel.startPos;
 
@@ -380,7 +380,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
       this.saveState();
     }
 
-    let gutterEl = this.resizeModel.paneResizing === "first" ? this.firstGutterEl : this.lastGutterEl;
+    const gutterEl = this.resizeModel.paneResizing === "first" ? this.firstGutterEl : this.lastGutterEl;
     this.removeStyleClass( gutterEl, "pane-gutter-resizing" );
     this.removeStyleClass( this.sectionEl, "pane-resizing" );
 
@@ -593,7 +593,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     const firstPaneSize = this.firstPanePixelSize / this.resizeModel.sectionSize;
     const lastPaneSize = this.lastPanePixelSize / this.resizeModel.sectionSize;
 
-    let stateData: SavedState = {
+    const stateData: SavedState = {
       firstPaneSize: firstPaneSize,
       lastPaneSize: lastPaneSize,
       firstPaneVisible: this.firstPaneVisible,
@@ -612,7 +612,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     const stateString = storage.getItem( this.stateKey );
 
     if( stateString ) {
-      let stateData: SavedState = JSON.parse( stateString );
+      const stateData: SavedState = JSON.parse( stateString );
       this.firstPaneSize = stateData.firstPaneSize;
       this.lastPaneSize = stateData.lastPaneSize;
       this.firstPaneVisible = stateData.firstPaneVisible;
@@ -640,7 +640,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    */
   private getElementWidth( element: HTMLElement ): number {
     let width = element.offsetWidth;
-    let style = getComputedStyle( element );
+    const style = getComputedStyle( element );
 
     width -= parseFloat( style.paddingLeft ) + parseFloat( style.paddingRight ) + parseFloat( style.borderLeftWidth ) + parseFloat( style.borderRightWidth );
     return width;
@@ -653,7 +653,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    */
   private getElementHeight( element: HTMLElement ): number {
     let height = element.offsetHeight;
-    let style = getComputedStyle( element );
+    const style = getComputedStyle( element );
 
     height -= parseFloat( style.paddingTop ) + parseFloat( style.paddingBottom ) + parseFloat( style.borderTopWidth ) + parseFloat( style.borderBottomWidth );
     return height;
@@ -669,7 +669,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     let width = element.offsetWidth;
 
     if( includeMargin ) {
-      let style = getComputedStyle( element );
+      const style = getComputedStyle( element );
       width += parseFloat( style.marginLeft ) + parseFloat( style.marginRight );
     }
 
@@ -686,7 +686,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     let height = element.offsetHeight;
 
     if( includeMargin ) {
-      let style = getComputedStyle( element );
+      const style = getComputedStyle( element );
       height += parseFloat( style.marginTop ) + parseFloat( style.marginBottom );
     }
 

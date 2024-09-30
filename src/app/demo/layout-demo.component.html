@@ -2,9 +2,8 @@
 
   <swift-layout-demo-header title="Swift Layout Demo"></swift-layout-demo-header>
 
-  <swift-layout stateKey="exampleLayout" stateStorage="local"
-                [gutterSize]="16" [gutterToggleSize]="65" [gutterToggleClosedSize]="80"
-                [style]="{ height: 'calc(100% - 3em)' }">
+  <swift-layout stateKey="exampleLayout" stateStorage="local" [style]="{ backgroundColor: '#999999' }"
+                [gutterSize]="16" [gutterToggleSize]="65" [gutterToggleSizeClosed]="80">
     <ng-template pane="left" [size]="30" [minSize]="10" [maxSize]="45">
       <div class="pane-content-demo">Left Pane</div>
     </ng-template>
