@@ -52,6 +52,22 @@ interface GutterStyle {
         }
       ),
       transition( "false <=> true", animate( "0.2s" ) )
+    ] ),
+    trigger( "toggleButton", [
+      state(
+        "*",
+        style( {
+          width: "{{ toggleWidth }}",
+          height: "{{ toggleHeight }}"
+        } ),
+        {
+          params: {
+            toggleWidth: "",
+            toggleHeight: ""
+          }
+        }
+      ),
+      transition( "false <=> true", animate( "0.2s ease-in-out" ) )
     ] )
   ],
   standalone: true,
@@ -167,6 +183,10 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
   private maxFirstPanePixelSize: number;
   private maxLastPanePixelSize: number;
 
+  // The actual size in pixels of gutter toggles
+  private gutterTogglePixelSize: number;
+  private gutterTogglePixelSizeClosed: number;
+
   private window: Window;
 
   // Elements for the section, panes, and gutter
@@ -196,10 +216,11 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     }
 
     // Get the initial sizes of panes in pixels
-    const sectionEl = this.elRef.nativeElement.querySelector( ".layout-pane-section" );
+    const sectionEl: HTMLElement = this.elRef.nativeElement.querySelector( ".layout-pane-section" );
     this.resizeModel.sectionSize = this.getSectionSize( sectionEl );
     const sectionSize = this.resizeModel.sectionSize;
     this.calculatePixelSizes( sectionSize );
+    this.calculateToggleSizes( sectionEl );
   }
 
   ngAfterViewInit() {
@@ -290,13 +311,27 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     }
   }
 
+  getToggleButtonWidth( visible: boolean ): string {
+    const size = visible ? this.gutterTogglePixelSize : this.gutterTogglePixelSizeClosed;
+    if( !this.isHorizontal() ) {
+      return `${ size }px`;
+    }
+    return "unset";
+  }
+
+  getToggleButtonHeight( visible: boolean ): string {
+    const size = visible ? this.gutterTogglePixelSize : this.gutterTogglePixelSizeClosed;
+    if( this.isHorizontal() ) {
+      return `${ size }px`;
+    }
+    return "unset";
+  }
+
   /**
    * Returns styling for the gutter handle, depending on the orientation of the layout.
    */
-  getGutterStyle( pane: PaneType ): GutterStyle {
+  getGutterStyle(): GutterStyle {
     const borderRadius = Math.round( this.gutterSize / 2 );
-    const paneVisible = pane === "first" ? this.firstPaneVisible : this.lastPaneVisible;
-    const toggleSize = paneVisible ? this.gutterToggleSize : this.gutterToggleSizeClosed;
 
     const style: GutterStyle = {
       borderRadius: `${ borderRadius }px`
@@ -304,10 +339,8 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
 
     if( this.isHorizontal() ) {
       style.width = `${ this.gutterSize }px`;
-      style.height = `${ toggleSize }px`;
     }
     else {
-      style.width = `${ toggleSize }px`;
       style.height = `${ this.gutterSize }px`;
     }
 
@@ -453,6 +486,35 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     }
 
     return Math.round( panePercentage * sectionSize );
+  }
+
+  /**
+   * Calculates the size in pixels of the gutter toggle button.
+   * @param {HTMLElement} sectionEl
+   * @private
+   */
+  private calculateToggleSizes( sectionEl: HTMLElement ) {
+    const gutterSize = this.isHorizontal() ? this.getElementHeight( sectionEl ) : this.getElementWidth( sectionEl ) ;
+
+    this.gutterTogglePixelSize = this.convertToggleSizeToPixels( gutterSize, this.gutterToggleSize );
+    this.gutterTogglePixelSizeClosed = this.convertToggleSizeToPixels( gutterSize, this.gutterToggleSizeClosed );
+  }
+
+  /**
+   * Converts the size of the gutter toggle button into pixels. Sizes under 1 are assumed to be a
+   * percentage, while sizes above 1 are assumed to be in pixels.
+   * @param {number} sectionSize
+   * @param {number} toggleSize
+   * @private
+   */
+  private convertToggleSizeToPixels( sectionSize: number, toggleSize: number ): number {
+    // When the toggle size is given as a decimal, assume it's a percentage
+    if( toggleSize < 1 ) {
+      return Math.round( toggleSize * sectionSize );
+    }
+
+    // Otherwise assume the toggle size is given in pixels
+    return toggleSize;
   }
 
   /**
