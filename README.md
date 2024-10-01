@@ -1,5 +1,7 @@
 # Swift Layout
 
+[![Build Status](https://github.com/ryankugel/swift-layout/actions/workflows/build.yml/badge.svg)](https://github.com/ryankugel/swift-layout/actions/workflows/build.yml)
+
 A simple layout library for Angular, designed to mimic some of the functionality of the [jQuery UI Layout plugin](https://plugins.jquery.com/layout/).
 
 ## Getting started
