@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Node.js Setup
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: "18"
           cache: "npm"
@@ -27,6 +27,14 @@ jobs:
 
       - name: Build package
         run: npm run build.lib
+
+      - name: Upload artifacts
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swift-layout
+          path: dist/swift-layout
+
 # TODO: RYAN - uncomment once we are ready to deploy & have tokens set up
 #      - name: Deploy
 #        if: success()
