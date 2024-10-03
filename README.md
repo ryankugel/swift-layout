@@ -94,12 +94,15 @@ A variety of options are provided by Swift Layout:
 These values are set as a percentage.
   - A size of 30% can be set as `[size]="30"` or `[size]="0.3"`
 - The size of the resize bar in pixels can be set using the `gutterSize` option.
+  - The gutter contains a toggle button, which can also have it's size customized using the `gutterToggleSize` & `gutterToggleSizeClosed` options.
+    - The gutter toggle sizes can be input as a pixel size using any number greater than 1, or as a percentage using values between 0 and 1.
 - Persisting the layout's state can be done by setting the `stateKey`. This key must be unique.
   - Layout state is persisted in either `localStorage` or `sessionStorage` depending on the value of the `stateStorage` option (defaults to `sessionStorage`).
 
 #### Detailed example
 ```angular2html
-<swift-layout stateKey="exampleLayout" [gutterSize]="16" stateStorage="local"
+<swift-layout stateKey="exampleLayout" stateStorage="local"
+              [gutterSize]="16" [gutterToggleSize]="200" [gutterToggleSizeClosed]="0.5"
               [style]="{ backgroundColor: '#dddddd', border: '1px solid #b6bbc3', borderRadius: '2em' }">
   <ng-template pane="left" [size]="30" [minSize]="10" [maxSize]="45">
     <div class="pane-content-demo">Left Pane</div>

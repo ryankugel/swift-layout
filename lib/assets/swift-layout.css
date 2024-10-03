@@ -1,3 +1,11 @@
+:root {
+  --label-text-size: 0.875rem;
+  --label-text-weight: 500;
+  --label-letter-spacing: 0.006rem;
+  --success-green: #d1f3a9;
+  --error-red: #f4e3e6;
+}
+
 @layer swift-layout {
   /* Layout container and panes */
   swift-layout, swift-layout-section {
@@ -32,6 +40,7 @@
   }
 
   .layout-pane-content {
+    background-color: var(--pane-background);
     display: flex;
     overflow: hidden;
   }
@@ -43,7 +52,7 @@
   /* Gutter and handles */
   .layout-pane-gutter {
     align-items: center;
-    background-color: #e2e8f0;
+    background-color: var(--gutter-background);
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
@@ -52,11 +61,11 @@
   }
 
   .layout-pane-gutter.pane-gutter-resizing {
-    background-color: #a4d76c;
+    background-color: var(--success-green);
   }
 
   .layout-pane-gutter.pane-gutter-resizing.invalid-resize {
-    background-color: #ff6f6f;
+    background-color: var(--error-red);
   }
 
   .layout-horizontal > .layout-pane-gutter {
@@ -72,7 +81,7 @@
   }
 
   .layout-pane-gutter-toggle {
-    background-color: #a7a7a7;
+    background-color: var(--gutter-toggle);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -81,23 +90,15 @@
   }
 
   .layout-pane-gutter-toggle:hover {
-    background-color: #b4b4b4;
+    background-color: var(--gutter-toggle-hover);
   }
 
   .layout-pane-gutter-toggle:hover:active {
-    background-color: #9a9a9a;
+    background-color: var(--gutter-toggle-active);
   }
 
   .layout-pane-gutter-toggle svg.gutter-icon {
-    fill: #f0f0f0;
-  }
-
-  .layout-pane-gutter-toggle:hover svg.gutter-icon {
-    fill: #f7f7f7;
-  }
-
-  .layout-pane-gutter-toggle:hover:active svg.gutter-icon {
-    fill: #ededed;
+    fill: var(--primary);
   }
 
   .layout-pane-gutter-toggle svg.gutter-icon.last {

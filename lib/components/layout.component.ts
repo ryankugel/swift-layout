@@ -40,7 +40,7 @@ export class LayoutComponent implements AfterContentInit {
   /**
    * The size in pixels of the resize bar toggle button when the pane is closed.
    */
-  @Input() gutterToggleSizeClosed: number = 65;
+  @Input() gutterToggleSizeClosed: number;
 
   /**
    * Key used to save the state of the layout.
@@ -77,6 +77,10 @@ export class LayoutComponent implements AfterContentInit {
   protected rightPaneMaxSize: number;
 
   ngAfterContentInit() {
+    if( !this.gutterToggleSizeClosed ) {
+      this.gutterToggleSizeClosed = this.gutterToggleSize;
+    }
+
     this.templates.forEach( item => {
       switch( item.getPaneRegion() ) {
         case "center":

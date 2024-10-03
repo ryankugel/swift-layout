@@ -1,13 +1,30 @@
-.header-container {
-  background-color: #555;
-  border: 1px solid #222;
+.header-bar {
   height: 3em;
-  line-height: 3em;
+  padding: 0 0.25em;
 }
 
-.header-container > span.title {
-  color: #dedede;
-  font-weight: bold;
-  padding-left: 1em;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+.header-bar > .header-left {
+  float: left;
+  height: 3em;
+  margin: 0;
+}
+
+.header-bar > .header-left > .header-icon {
+  box-sizing: border-box;
+  padding: 0.75em;
+  position: unset !important;
+  width: auto !important;
+}
+
+.header-bar > .header-left > .header-title {
+  float: right;
+  height: 3em;
+  line-height: 3em;
+  padding: 0 0.25em;
+}
+
+.header-bar > .header-left > .header-title > span {
+  font-size: var(--label-text-size);
+  font-weight: var(--label-text-weight);
+  letter-spacing: var(--label-letter-spacing);
 }

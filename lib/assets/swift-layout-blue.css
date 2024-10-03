@@ -1,0 +1,16 @@
+:root {
+  --container-primary: #d7e3ff;
+  --primary: #005cbb;
+  --pane-background: #faf9fd;
+  --gutter-background: #edeef3;
+  --gutter-toggle: #c0d6f6;
+  --gutter-toggle-hover: #a8c9f6;
+  --gutter-toggle-active: #a6c0e0;
+}
+
+@layer swift-layout {
+  .header-bar {
+    background-color: var(--container-primary);
+    color: var(--primary);
+  }
+}
