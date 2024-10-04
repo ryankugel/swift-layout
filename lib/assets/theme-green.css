@@ -1,0 +1,16 @@
+:root {
+  --primary-text: #00dddd;
+  --container-primary: #004f4f;
+  --pane-background: #101414;
+  --gutter-background: #1f2121;
+  --gutter-toggle: #164b4b;
+  --gutter-toggle-hover: #1d5353;
+  --gutter-toggle-active: #244545;
+  --gutter-toggle-icon: #00dddd;
+  --success-green: #364a1e;
+  --error-red: #6d3030;
+}
+
+.swift-layout {
+  color: #e0e3e2;
+}

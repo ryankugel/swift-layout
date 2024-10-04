@@ -8,7 +8,8 @@ import {
   ElementRef,
   Inject,
   Input,
-  QueryList, Renderer2,
+  QueryList,
+  Renderer2,
   TemplateRef,
   ViewChild,
   ViewChildren
@@ -316,7 +317,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     if( !this.isHorizontal() ) {
       return `${ size }px`;
     }
-    return "unset";
+    return `${ this.gutterSize }px`;
   }
 
   getToggleButtonHeight( visible: boolean ): string {
@@ -324,7 +325,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     if( this.isHorizontal() ) {
       return `${ size }px`;
     }
-    return "unset";
+    return `${ this.gutterSize }px`;
   }
 
   /**
@@ -333,18 +334,9 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
   getGutterStyle(): GutterStyle {
     const borderRadius = Math.round( this.gutterSize / 2 );
 
-    const style: GutterStyle = {
-      borderRadius: `${ borderRadius }px`
+    return {
+      borderRadius: `${borderRadius}px`
     };
-
-    if( this.isHorizontal() ) {
-      style.width = `${ this.gutterSize }px`;
-    }
-    else {
-      style.height = `${ this.gutterSize }px`;
-    }
-
-    return style;
   }
 
   /**

@@ -1,9 +1,16 @@
 :root {
+  --primary-text: #262626;
+  --pane-background: #f7f7f7;
+  --gutter-background: #e2e8f0;
+  --gutter-toggle: #a7a7a7;
+  --gutter-toggle-hover: #b4b4b4;
+  --gutter-toggle-active: #9a9a9a;
+  --gutter-toggle-icon: #f0f0f0;
   --label-text-size: 0.875rem;
   --label-text-weight: 500;
   --label-letter-spacing: 0.006rem;
   --success-green: #d1f3a9;
-  --error-red: #f4e3e6;
+  --error-red: #ff6f6f;
 }
 
 @layer swift-layout {
@@ -98,7 +105,7 @@
   }
 
   .layout-pane-gutter-toggle svg.gutter-icon {
-    fill: var(--primary);
+    fill: var(--gutter-toggle-icon);
   }
 
   .layout-pane-gutter-toggle svg.gutter-icon.last {

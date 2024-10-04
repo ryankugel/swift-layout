@@ -1,0 +1,10 @@
+:root {
+  --primary-text: #ba005c;
+  --container-primary: #ffd9e1;
+  --pane-background: #fff8f8;
+  --gutter-background: #fbeef0;
+  --gutter-toggle: #fac9d6;
+  --gutter-toggle-hover: #f2b7c8;
+  --gutter-toggle-active: #ecc0cd;
+  --gutter-toggle-icon: #ba005c;
+}
