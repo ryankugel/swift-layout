@@ -36,6 +36,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "*",
+                "input": "lib/assets",
+                "output": "assets/"
               }
             ],
             "styles": [

@@ -6,4 +6,53 @@
       <span>{{ title }}</span>
     </div>
   </div>
+
+  <div class="header-right">
+    <button type="button" class="icon-button" (click)="toggleThemePicker()">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--primary-text)"><path d="M252.33-912.67 300-960l346.12 346.12q23.21 23.21 23.21 56.96 0 33.76-23 56.59l-182 182q-23 23-55 23t-55-23l-182-182q-23-22.85-23-56.63t23-56.63l189.34-189.74-109.34-109.34Zm157 157L213-559.33h392.67L409.33-755.67Zm345.19 475q-30.85 0-52.69-21.93Q680-324.53 680-355.33q0-18.57 9.5-39.79 9.5-21.21 23.83-42.21 8.34-12.67 19.34-27 11-14.34 22-27 11 12.66 22 27 11 14.33 19.33 27 14.33 21 23.83 42.21 9.5 21.22 9.5 39.79 0 30.8-21.97 52.73-21.98 21.93-52.84 21.93ZM80 .67v-134h800v134H80Z"/></svg>
+    </button>
+  </div>
 </nav>
+
+@if( themePickerVisible ) {
+  <div class="theme-picker-overlay">
+    <div class="overlay-content">
+      <ng-container [ngTemplateOutlet]="themeButton"
+                    [ngTemplateOutletContext]="{
+                    theme: 'red',
+                    themeLabel: 'Rose & Red',
+                    themeSelected: selectedTheme === 'red'
+                  }"></ng-container>
+      <ng-container [ngTemplateOutlet]="themeButton"
+                    [ngTemplateOutletContext]="{
+                    theme: 'blue',
+                    themeLabel: 'Azure & Blue',
+                    themeSelected: selectedTheme === 'blue'
+                  }"></ng-container>
+      <ng-container [ngTemplateOutlet]="themeButton"
+                    [ngTemplateOutletContext]="{
+                    theme: 'magenta',
+                    themeLabel: 'Magenta & Violet',
+                    themeSelected: selectedTheme === 'magenta'
+                  }"></ng-container>
+      <ng-container [ngTemplateOutlet]="themeButton"
+                    [ngTemplateOutletContext]="{
+                    theme: 'green',
+                    themeLabel: 'Cyan & Orange',
+                    themeSelected: selectedTheme === 'green'
+                  }"></ng-container>
+    </div>
+  </div>
+}
+
+<ng-template #themeButton let-theme="theme" let-themeLabel="themeLabel" let-themeSelected="themeSelected">
+  <button class="menu-item" (click)="setTheme( theme )">
+    @if( themeSelected ) {
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--menu-item-selected-icon-color)"><path d="M480-280q83 0 141.5-58.5T680-480q0-83-58.5-141.5T480-680q-83 0-141.5 58.5T280-480q0 83 58.5 141.5T480-280Zm0 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+    }
+    @else {
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--menu-item-icon-color)"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+    }
+    <span class="menu-item-label">{{ themeLabel }}</span>
+  </button>
+</ng-template>

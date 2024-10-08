@@ -1,8 +1,7 @@
 @import url("../lib/assets/swift-layout.css");
-@import url("../lib/assets/swift-layout-blue.css");
 
 html, body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: var(--label-font-family);
   height: 100%;
   margin: 0;
   padding: 0;
