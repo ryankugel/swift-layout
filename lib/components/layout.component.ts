@@ -4,7 +4,7 @@ import { FirstPane } from "../directives/first-pane.directive";
 import { LastPane } from "../directives/last-pane.directive";
 import { MiddlePane } from "../directives/middle-pane.directive";
 import { Pane } from "../directives/pane.directive";
-import { LayoutOrientation, PaneRegion, StateStorage } from "../models/layout.model";
+import { Constants, LayoutOrientation, PaneRegion, StateStorage } from "../models/layout.model";
 import { LayoutSectionComponent } from "./layout-section.component";
 
 @Component( {
@@ -50,7 +50,7 @@ export class LayoutComponent implements AfterContentInit {
   /**
    * Defines where state is stored, either 'session' or 'local'.
    */
-  @Input() stateStorage: StateStorage = "session";
+  @Input() stateStorage: StateStorage = Constants.storageSession;
 
   @ContentChildren( Pane ) templates: QueryList<Pane>;
 
@@ -83,15 +83,15 @@ export class LayoutComponent implements AfterContentInit {
 
     this.templates.forEach( item => {
       switch( item.getPaneRegion() ) {
-        case "center":
+        case PaneRegion.CENTER:
           if( !this.centerPaneTemplate ) {
             this.centerPaneTemplate = item.template;
           }
           else {
-            this.logDuplicatePane( "center" );
+            this.logDuplicatePane( PaneRegion.CENTER );
           }
           break;
-        case "top":
+        case PaneRegion.TOP:
           if( !this.topPaneTemplate ) {
             this.topPaneSize = item.size;
             this.topPaneMinSize = item.minSize;
@@ -99,10 +99,10 @@ export class LayoutComponent implements AfterContentInit {
             this.topPaneTemplate = item.template;
           }
           else {
-            this.logDuplicatePane( "top" );
+            this.logDuplicatePane( PaneRegion.TOP );
           }
           break;
-        case "bottom":
+        case PaneRegion.BOTTOM:
           if( !this.bottomPaneTemplate ) {
             this.bottomPaneSize = item.size;
             this.bottomPaneMinSize = item.minSize;
@@ -110,10 +110,10 @@ export class LayoutComponent implements AfterContentInit {
             this.bottomPaneTemplate = item.template;
           }
           else {
-            this.logDuplicatePane( "bottom" );
+            this.logDuplicatePane( PaneRegion.BOTTOM );
           }
           break;
-        case "left":
+        case PaneRegion.LEFT:
           if( !this.leftPaneTemplate ) {
             this.leftPaneSize = item.size;
             this.leftPaneMinSize = item.minSize;
@@ -121,10 +121,10 @@ export class LayoutComponent implements AfterContentInit {
             this.leftPaneTemplate = item.template;
           }
           else {
-            this.logDuplicatePane( "left" );
+            this.logDuplicatePane( PaneRegion.LEFT );
           }
           break;
-        case "right":
+        case PaneRegion.RIGHT:
           if( !this.rightPaneTemplate ) {
             this.rightPaneSize = item.size;
             this.rightPaneMinSize = item.minSize;
@@ -132,7 +132,7 @@ export class LayoutComponent implements AfterContentInit {
             this.rightPaneTemplate = item.template;
           }
           else {
-            this.logDuplicatePane( "right" );
+            this.logDuplicatePane( PaneRegion.RIGHT );
           }
           break;
       }
@@ -150,4 +150,5 @@ export class LayoutComponent implements AfterContentInit {
     console.error( `Duplicate pane found: "${ pane }", ignoring the duplicate.` );
   }
 
+  protected readonly Constants = Constants;
 }

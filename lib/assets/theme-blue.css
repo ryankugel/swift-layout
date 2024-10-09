@@ -10,8 +10,9 @@
   --button-hover: #cbd7f1;
   --button-active: #a6c3ef;
   --menu-background-color: #efedf0;
-  --menu-box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, .2), 0px 2px 2px 0px rgba(0, 0, 0, .14), 0px 1px 5px 0px rgba(0, 0, 0, .12);
   --menu-item-color: #1a1b1f;
   --menu-item-icon-color: #44474e;
   --menu-item-selected-icon-color: #343dff;
+  --menu-item-hover-background: rgba(26, 27, 31, 0.08);
+  --menu-item-active-background: rgba(26, 27, 31, 0.16);
 }

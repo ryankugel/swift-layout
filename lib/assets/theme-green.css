@@ -7,6 +7,16 @@
   --gutter-toggle-hover: #1d5353;
   --gutter-toggle-active: #244545;
   --gutter-toggle-icon: #00dddd;
+
+  --button-hover: #115b5b;
+  --button-active: #317070;
+  --menu-background-color: #1c2020;
+  --menu-item-color: #e0e3e2;
+  --menu-item-icon-color: #dae5e4;
+  --menu-item-selected-icon-color: #ffb787;
+  --menu-item-hover-background: rgba(224, 227, 226, 0.08);
+  --menu-item-active-background: rgba(224, 227, 226, 0.16);
+
   --success-green: #364a1e;
   --error-red: #6d3030;
 }

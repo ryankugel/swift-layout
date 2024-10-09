@@ -2,6 +2,8 @@
 
 [![Build Status](https://github.com/ryankugel/swift-layout/actions/workflows/build.yml/badge.svg)](https://github.com/ryankugel/swift-layout/actions/workflows/build.yml)
 
+![Swift Layout logo](public/icon.png)
+
 A simple layout library for Angular, designed to mimic some of the functionality of the [jQuery UI Layout plugin](https://plugins.jquery.com/layout/).
 
 ## Getting started
@@ -11,14 +13,21 @@ A simple layout library for Angular, designed to mimic some of the functionality
   npm install swift-layout
 ```
 
-### Importing styles
-Swift Layout includes a single CSS file containing the default styles for the library.
-This `swift-layout.css` file can be included in `angular.json`.
+### Importing themes
+Swift Layout includes a CSS file containing the default styles for the library called `swift-layout.css`. Multiple themes are also included
+to match the default Material 3 themes:
+  - `theme-blue.css`
+  - `theme-green.css`
+  - `theme-magenta.css`
+  - `theme-red.css`
+
+The `swift-layout.css` file, and an optional theme file, can be included in `angular.json`.
 
 #### angular.json
 ```json
 "styles": [
-  "node_modules/swift-layout/assets/swift-layout.css"
+  "node_modules/swift-layout/assets/swift-layout.css",
+  "node_modules/swift-layout/assets/theme-blue.css"
 ]
 ```
 
@@ -102,8 +111,7 @@ These values are set as a percentage.
 #### Detailed example
 ```angular2html
 <swift-layout stateKey="exampleLayout" stateStorage="local"
-              [gutterSize]="16" [gutterToggleSize]="200" [gutterToggleSizeClosed]="0.5"
-              [style]="{ backgroundColor: '#dddddd', border: '1px solid #b6bbc3', borderRadius: '2em' }">
+              [gutterSize]="20" [gutterToggleSize]="200" [gutterToggleSizeClosed]="0.5">
   <ng-template pane="left" [size]="30" [minSize]="10" [maxSize]="45">
     <div class="pane-content-demo">Left Pane</div>
   </ng-template>
@@ -123,7 +131,7 @@ These values are set as a percentage.
 
 ---
 
-## Styling
+## Custom Styling
 The following is a list of CSS classes used by Swift Layout.
 
 | Name                                       | Description                                           |

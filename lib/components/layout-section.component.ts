@@ -17,7 +17,7 @@ import {
 import { FirstPane } from "../directives/first-pane.directive";
 import { LastPane } from "../directives/last-pane.directive";
 import { MiddlePane } from "../directives/middle-pane.directive";
-import { LayoutOrientation, StateStorage } from "../models/layout.model";
+import { Constants, LayoutOrientation, StateStorage } from "../models/layout.model";
 
 type VoidListener = VoidFunction | null | undefined;
 
@@ -80,10 +80,12 @@ interface GutterStyle {
 } )
 export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
 
+
+
   /**
    * The direction of panes in the layout, either 'horizontal' or 'vertical'.
    */
-  @Input() orientation: LayoutOrientation = "horizontal";
+  @Input() orientation: LayoutOrientation = Constants.horizontalOrientation;
 
   /**
    * The size in pixels of the resize bar (the gutter).
@@ -217,7 +219,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     }
 
     // Get the initial sizes of panes in pixels
-    const sectionEl: HTMLElement = this.elRef.nativeElement.querySelector( ".layout-pane-section" );
+    const sectionEl: HTMLElement = this.elRef.nativeElement.querySelector( Constants.sectionSelector );
     this.resizeModel.sectionSize = this.getSectionSize( sectionEl );
     const sectionSize = this.resizeModel.sectionSize;
     this.calculatePixelSizes( sectionSize );
@@ -233,7 +235,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
 
     this.gutterViewChildren.forEach( gutterElRef => {
       const gutterEl: HTMLElement = gutterElRef.nativeElement;
-      if( this.hasStyleClass( gutterEl, "gutter-first" ) ) {
+      if( this.hasStyleClass( gutterEl, Constants.gutterFirstClass ) ) {
         this.firstGutterEl = gutterEl;
       }
       else {
@@ -249,7 +251,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     let paneVisible: boolean;
     let paneSize: number;
 
-    if( pane === "first" ) {
+    if( pane === Constants.paneTypeFirst ) {
       paneVisible = this.firstPaneVisible;
       paneSize = this.firstPanePixelSize;
     }
@@ -274,7 +276,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    * @param {boolean} paneVisible
    */
   onGutterMouseDown( event: MouseEvent, pane: PaneType, paneVisible: boolean ) {
-    if( event.button !== 0 || !paneVisible || !this.hasStyleClass( event.target as HTMLElement, "layout-pane-gutter" ) ) {
+    if( event.button !== 0 || !paneVisible || !this.hasStyleClass( event.target as HTMLElement, Constants.gutterClass ) ) {
       return;
     }
 
@@ -288,9 +290,9 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     this.resizeModel.paneResizing = pane;
 
     // Update element classes for resize
-    const gutterEl = pane === "first" ? this.firstGutterEl : this.lastGutterEl;
-    this.addStyleClass( this.sectionEl, "pane-resizing" );
-    this.addStyleClass( gutterEl, "pane-gutter-resizing" );
+    const gutterEl = pane === Constants.paneTypeFirst ? this.firstGutterEl : this.lastGutterEl;
+    this.addStyleClass( this.sectionEl, Constants.paneResizingClass );
+    this.addStyleClass( gutterEl, Constants.gutterResizingClass );
 
     this.bindMouseListeners();
   }
@@ -300,7 +302,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    * @param {PaneType} pane
    */
   onGutterHandleClick( pane: PaneType ) {
-    if( pane === "first" ) {
+    if( pane === Constants.paneTypeFirst ) {
       this.firstPaneVisible = !this.firstPaneVisible;
     }
     else {
@@ -344,7 +346,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    * @param {PaneType} pane
    */
   getGutterClass( pane: PaneType ): string {
-    return `layout-pane-gutter gutter-${ pane } layout-component`;
+    return `${ Constants.gutterClass } gutter-${ pane } ${ Constants.layoutComponentClass }`;
   }
 
   /**
@@ -368,19 +370,19 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     let newLastPaneSize = this.lastPanePixelSize;
 
 
-    if( this.resizeModel.paneResizing === "first" ) {
+    if( this.resizeModel.paneResizing === Constants.paneTypeFirst ) {
       newFirstPaneSize += newPos;
     }
     else {
       newLastPaneSize -= newPos;
     }
 
-    const gutterEl = this.resizeModel.paneResizing === "first" ? this.firstGutterEl : this.lastGutterEl;
+    const gutterEl = this.resizeModel.paneResizing === Constants.paneTypeFirst ? this.firstGutterEl : this.lastGutterEl;
 
     // If the new sizes for panes are valid, update the pane sizes (which automatically updates the elements)
     if( this.validateResize( newFirstPaneSize, newLastPaneSize ) ) {
-      if( this.hasStyleClass( gutterEl, "invalid-resize" ) ) {
-        this.removeStyleClass( gutterEl, "invalid-resize" );
+      if( this.hasStyleClass( gutterEl, Constants.invalidResizeClass ) ) {
+        this.removeStyleClass( gutterEl, Constants.invalidResizeClass );
       }
 
       this.firstPanePixelSize = newFirstPaneSize;
@@ -389,9 +391,9 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     }
     // When the resize is invalid, adjust the gutter to indicate it's reached the limit
     else {
-      const gutterEl = this.resizeModel.paneResizing === "first" ? this.firstGutterEl : this.lastGutterEl;
-      if( !this.hasStyleClass( gutterEl, "invalid-resize" ) ) {
-        this.addStyleClass( gutterEl, "invalid-resize" );
+      const gutterEl = this.resizeModel.paneResizing === Constants.paneTypeFirst ? this.firstGutterEl : this.lastGutterEl;
+      if( !this.hasStyleClass( gutterEl, Constants.invalidResizeClass ) ) {
+        this.addStyleClass( gutterEl, Constants.invalidResizeClass );
       }
     }
   }
@@ -405,9 +407,9 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
       this.saveState();
     }
 
-    const gutterEl = this.resizeModel.paneResizing === "first" ? this.firstGutterEl : this.lastGutterEl;
-    this.removeStyleClass( gutterEl, "pane-gutter-resizing" );
-    this.removeStyleClass( this.sectionEl, "pane-resizing" );
+    const gutterEl = this.resizeModel.paneResizing === Constants.paneTypeFirst ? this.firstGutterEl : this.lastGutterEl;
+    this.removeStyleClass( gutterEl, Constants.gutterResizingClass );
+    this.removeStyleClass( this.sectionEl, Constants.paneResizingClass );
 
     this.resetResizeModel();
   }
@@ -581,14 +583,22 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    */
   private bindMouseListeners() {
     if( !this.resizeModel.mouseMoveListener ) {
-      this.resizeModel.mouseMoveListener = this.renderer.listen( this.document, "mousemove", event => this.onResize( event ) );
+      this.resizeModel.mouseMoveListener = this.renderer.listen(
+        this.document,
+        Constants.mouseMoveEvent,
+        event => this.onResize( event )
+      );
     }
 
     if( !this.resizeModel.mouseUpListener ) {
-      this.resizeModel.mouseUpListener = this.renderer.listen( this.document, "mouseup", () => {
-        this.resizeEnd();
-        this.unbindMouseListeners();
-      } );
+      this.resizeModel.mouseUpListener = this.renderer.listen(
+        this.document,
+        Constants.mouseUpEvent,
+        () => {
+          this.resizeEnd();
+          this.unbindMouseListeners();
+        }
+      );
     }
   }
 
@@ -626,7 +636,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    * @private
    */
   private isHorizontal(): boolean {
-    return this.orientation === "horizontal";
+    return this.orientation === Constants.horizontalOrientation;
   }
 
   /**
@@ -682,7 +692,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    * @private
    */
   private getStorage(): Storage {
-    return this.stateStorage === "local"
+    return this.stateStorage === Constants.storageLocal
       ? this.window.localStorage
       : this.window.sessionStorage;
   }
@@ -800,4 +810,5 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     }
   }
 
+  protected readonly Constants = Constants;
 }

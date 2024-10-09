@@ -1,6 +1,7 @@
 @import url("../lib/assets/swift-layout.css");
 
 html, body {
+  color: #201a1b;
   font-family: var(--label-font-family);
   height: 100%;
   margin: 0;

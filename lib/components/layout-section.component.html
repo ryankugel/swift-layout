@@ -52,7 +52,7 @@
             (click)="onGutterHandleClick( pane )" [ngStyle]="getGutterStyle()">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" class="gutter-icon"
            [ngStyle]="getGutterIconStyle()" [ngClass]="{ 'last': pane === 'last' }">
-        @if( orientation === "horizontal" ) {
+        @if( orientation === Constants.horizontalOrientation ) {
           @if( paneVisible ) {
             <path d="M 337.60563,480 100,240 337.60563,0 380,42.82158 184.78873,240 380,437.17842 Z" />
           }
