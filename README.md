@@ -88,7 +88,7 @@ In its simplest form, Swift Layout can be used to set up multiple resizable pane
   </ng-template>
 
   <ng-template pane="bottom">
-    <div class="pane-content-demo">Left Pane</div>
+    <div class="pane-content-demo">Bottom Pane</div>
   </ng-template>
 </swift-layout>
 ```

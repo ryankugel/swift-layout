@@ -142,6 +142,11 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    */
   @Input() stateStorage: StateStorage;
 
+  /**
+   * Clears the storage being used for save state, for unit test purposes.
+   */
+  @Input() clearStorage: boolean = false;
+
   @ContentChild( FirstPane ) firstPaneChild: FirstPane;
   @ContentChild( MiddlePane ) middlePaneChild: MiddlePane;
   @ContentChild( LastPane ) lastPaneChild: LastPane;
@@ -163,13 +168,13 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
   protected firstPaneVisible: boolean = true;
   protected lastPaneVisible: boolean = true;
 
+  protected readonly Constants = Constants;
+
   // Variables to track pane resizing
   private resizeModel = {
-    dragging: false,
     sectionSize: null as number,
     startPos: null as number,
     firstPaneSize: null as number,
-    middlePaneSize: null as number,
     lastPaneSize: null as number,
     paneResizing: null as PaneType,
     mouseMoveListener: null as VoidListener,
@@ -195,7 +200,6 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
   // Elements for the section, panes, and gutter
   private sectionEl: HTMLElement;
   private firstPaneEl: HTMLElement;
-  private middlePaneEl: HTMLElement;
   private lastPaneEl: HTMLElement;
   private firstGutterEl: HTMLElement;
   private lastGutterEl: HTMLElement;
@@ -220,8 +224,8 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
 
     // Get the initial sizes of panes in pixels
     const sectionEl: HTMLElement = this.elRef.nativeElement.querySelector( Constants.sectionSelector );
-    this.resizeModel.sectionSize = this.getSectionSize( sectionEl );
-    const sectionSize = this.resizeModel.sectionSize;
+    const sectionSize = this.getSectionSize( sectionEl );
+    this.resizeModel.sectionSize = sectionSize;
     this.calculatePixelSizes( sectionSize );
     this.calculateToggleSizes( sectionEl );
   }
@@ -230,7 +234,6 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     // Pull elements from ViewChildren
     this.sectionEl = this.sectionViewChild.nativeElement;
     this.firstPaneEl = this.firstPaneViewChild?.nativeElement;
-    this.middlePaneEl = this.middlePaneViewChild?.nativeElement;
     this.lastPaneEl = this.lastPaneViewChild?.nativeElement;
 
     this.gutterViewChildren.forEach( gutterElRef => {
@@ -282,10 +285,8 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
 
     // Initialize variables for handling the resize
     this.resizeModel.sectionSize = this.getSectionSize( this.sectionEl );
-    this.resizeModel.dragging = true;
     this.resizeModel.startPos = this.isHorizontal() ? event.pageX : event.pageY;
     this.resizeModel.firstPaneSize = this.calculatePaneSize( this.firstPaneEl );
-    this.resizeModel.middlePaneSize = this.calculatePaneSize( this.middlePaneEl );
     this.resizeModel.lastPaneSize = this.calculatePaneSize( this.lastPaneEl );
     this.resizeModel.paneResizing = pane;
 
@@ -337,7 +338,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     const borderRadius = Math.round( this.gutterSize / 2 );
 
     return {
-      borderRadius: `${borderRadius}px`
+      borderRadius: `${ borderRadius }px`
     };
   }
 
@@ -412,6 +413,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     this.removeStyleClass( this.sectionEl, Constants.paneResizingClass );
 
     this.resetResizeModel();
+    this.unbindMouseListeners();
   }
 
   /**
@@ -594,10 +596,7 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
       this.resizeModel.mouseUpListener = this.renderer.listen(
         this.document,
         Constants.mouseUpEvent,
-        () => {
-          this.resizeEnd();
-          this.unbindMouseListeners();
-        }
+        () => this.resizeEnd()
       );
     }
   }
@@ -623,10 +622,8 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    * @private
    */
   private resetResizeModel() {
-    this.resizeModel.dragging = false;
     this.resizeModel.startPos = null;
     this.resizeModel.firstPaneSize = null;
-    this.resizeModel.middlePaneSize = null;
     this.resizeModel.lastPaneSize = null;
     this.resizeModel.paneResizing = null;
   }
@@ -673,6 +670,10 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
    */
   private restoreState(): boolean {
     const storage = this.getStorage();
+    if( this.clearStorage ) {
+      storage.clear();
+    }
+
     const stateString = storage.getItem( this.stateKey );
 
     if( stateString ) {
@@ -810,5 +811,4 @@ export class LayoutSectionComponent implements AfterContentInit, AfterViewInit {
     }
   }
 
-  protected readonly Constants = Constants;
 }

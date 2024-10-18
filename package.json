@@ -11,7 +11,8 @@
     "start": "ng serve swift-layout-demo",
     "build": "ng build swift-layout-demo",
     "build.lib": "ng build swift-layout",
-    "test": "ng test swift-layout-demo",
+    "test": "ng test swift-layout",
+    "test.watch": "ng test swift-layout --watch=true",
     "lint": "ng lint swift-layout-demo"
   },
   "private": true,
@@ -25,6 +26,7 @@
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
     "@angular-eslint/builder": "~18.3.1",
+    "lodash": "^4.17.21",
     "rxjs": "~7.8.0",
     "tslib": "~2.7.0",
     "zone.js": "~0.14.10"
@@ -34,6 +36,8 @@
     "@angular/cli": "^18.0.0",
     "@angular/compiler-cli": "^18.0.0",
     "@types/jasmine": "~5.1.0",
+    "@types/lodash": "^4.17.10",
+    "@types/yargs": "~17.0.33",
     "@typescript-eslint/eslint-plugin": "^8.2.0",
     "@typescript-eslint/parser": "^8.2.0",
     "eslint": "^8.57.0",
@@ -44,7 +48,10 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "karma-mocha-reporter": "~2.2.5",
     "ng-packagr": "^18.2.0",
-    "typescript": "~5.5.2"
+    "puppeteer": "~22.11.2",
+    "typescript": "~5.5.2",
+    "yargs": "~17.6.2"
   }
 }

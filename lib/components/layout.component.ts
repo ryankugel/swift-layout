@@ -76,6 +76,8 @@ export class LayoutComponent implements AfterContentInit {
   protected rightPaneMinSize: number;
   protected rightPaneMaxSize: number;
 
+  protected readonly Constants = Constants;
+
   ngAfterContentInit() {
     if( !this.gutterToggleSizeClosed ) {
       this.gutterToggleSizeClosed = this.gutterToggleSize;
@@ -150,5 +152,4 @@ export class LayoutComponent implements AfterContentInit {
     console.error( `Duplicate pane found: "${ pane }", ignoring the duplicate.` );
   }
 
-  protected readonly Constants = Constants;
 }
