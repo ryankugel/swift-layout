@@ -21,7 +21,13 @@ to match the default Material 3 themes:
   - `theme-magenta.css`
   - `theme-red.css`
 
-The `swift-layout.css` file, and an optional theme file, can be included in `angular.json`.
+The `swift-layout.css` file, and an optional theme file, can be included as imports in `styles.css` or `angular.json`.
+
+#### styles.css
+```css
+@import "swift-layout/assets/swift-layout.css";
+@import "swift-layout/assets/theme-blue.css";
+```
 
 #### angular.json
 ```json

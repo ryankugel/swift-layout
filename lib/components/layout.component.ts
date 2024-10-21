@@ -85,15 +85,15 @@ export class LayoutComponent implements AfterContentInit {
 
     this.templates.forEach( item => {
       switch( item.getPaneRegion() ) {
-        case PaneRegion.CENTER:
+        case Constants.centerRegion:
           if( !this.centerPaneTemplate ) {
             this.centerPaneTemplate = item.template;
           }
           else {
-            this.logDuplicatePane( PaneRegion.CENTER );
+            this.logDuplicatePane( Constants.centerRegion );
           }
           break;
-        case PaneRegion.TOP:
+        case Constants.topRegion:
           if( !this.topPaneTemplate ) {
             this.topPaneSize = item.size;
             this.topPaneMinSize = item.minSize;
@@ -101,10 +101,10 @@ export class LayoutComponent implements AfterContentInit {
             this.topPaneTemplate = item.template;
           }
           else {
-            this.logDuplicatePane( PaneRegion.TOP );
+            this.logDuplicatePane( Constants.topRegion );
           }
           break;
-        case PaneRegion.BOTTOM:
+        case Constants.bottomRegion:
           if( !this.bottomPaneTemplate ) {
             this.bottomPaneSize = item.size;
             this.bottomPaneMinSize = item.minSize;
@@ -112,10 +112,10 @@ export class LayoutComponent implements AfterContentInit {
             this.bottomPaneTemplate = item.template;
           }
           else {
-            this.logDuplicatePane( PaneRegion.BOTTOM );
+            this.logDuplicatePane( Constants.bottomRegion );
           }
           break;
-        case PaneRegion.LEFT:
+        case Constants.leftRegion:
           if( !this.leftPaneTemplate ) {
             this.leftPaneSize = item.size;
             this.leftPaneMinSize = item.minSize;
@@ -123,10 +123,10 @@ export class LayoutComponent implements AfterContentInit {
             this.leftPaneTemplate = item.template;
           }
           else {
-            this.logDuplicatePane( PaneRegion.LEFT );
+            this.logDuplicatePane( Constants.leftRegion );
           }
           break;
-        case PaneRegion.RIGHT:
+        case Constants.rightRegion:
           if( !this.rightPaneTemplate ) {
             this.rightPaneSize = item.size;
             this.rightPaneMinSize = item.minSize;
@@ -134,7 +134,7 @@ export class LayoutComponent implements AfterContentInit {
             this.rightPaneTemplate = item.template;
           }
           else {
-            this.logDuplicatePane( PaneRegion.RIGHT );
+            this.logDuplicatePane( Constants.rightRegion );
           }
           break;
       }

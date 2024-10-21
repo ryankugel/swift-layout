@@ -1,12 +1,6 @@
 export type StateStorage = "session" | "local";
 
-export enum PaneRegion {
-  CENTER = "center",
-  TOP = "top",
-  BOTTOM = "bottom",
-  LEFT = "left",
-  RIGHT = "right"
-}
+export type PaneRegion = "center" | "top" | "bottom" | "left" | "right";
 
 export type LayoutOrientation = "horizontal" | "vertical";
 
@@ -25,4 +19,9 @@ export class Constants {
   static readonly invalidResizeClass = "invalid-resize";
   static readonly mouseMoveEvent = "mousemove";
   static readonly mouseUpEvent = "mouseup";
+  static readonly centerRegion = "center";
+  static readonly topRegion = "top";
+  static readonly bottomRegion = "bottom";
+  static readonly leftRegion = "left";
+  static readonly rightRegion = "right";
 }
