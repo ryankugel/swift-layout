@@ -1,0 +1,18 @@
+:root {
+  --primary-text: #005cbb;
+  --container-primary: #d7e3ff;
+  --pane-background: #faf9fd;
+  --gutter-background: #edeef3;
+  --gutter-toggle: #c0d6f6;
+  --gutter-toggle-hover: #a8c9f6;
+  --gutter-toggle-active: #a6c0e0;
+  --gutter-toggle-icon: #005cbb;
+  --button-hover: #cbd7f1;
+  --button-active: #a6c3ef;
+  --menu-background-color: #efedf0;
+  --menu-item-color: #1a1b1f;
+  --menu-item-icon-color: #44474e;
+  --menu-item-selected-icon-color: #343dff;
+  --menu-item-hover-background: rgba(26, 27, 31, 0.08);
+  --menu-item-active-background: rgba(26, 27, 31, 0.16);
+}

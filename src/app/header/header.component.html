@@ -1,0 +1,66 @@
+<nav class="header-bar">
+
+  <div class="header-left">
+    <div class="header-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 500 500" fill="var(--primary-text)">
+        <g>
+          <path d="M 190 10 C 90.2801 10 10 90.2801 10 190 L 10 310 C 10 409.7199 90.2801 490 190 490 L 310 490 C 409.7199 490 490 409.7199 490 310 L 490 190 C 490 90.2801 409.7199 10 310 10 L 190 10 z M 258.80078 104.40039 C 267.33411 104.40039 276.40001 104.79961 286 105.59961 C 295.86666 106.13294 303.73295 106.93333 309.59961 108 L 354.80078 141.19922 L 339.19922 190 L 244.40039 164 C 233.46707 164 225.33333 166.26745 220 170.80078 C 214.93334 175.33411 212.40039 180.79923 212.40039 187.19922 C 212.40039 194.93254 216.79962 201.06628 225.59961 205.59961 C 234.3996 210.13294 247.06629 214.66589 263.59961 219.19922 C 289.73292 226.39921 310.00041 234.39923 324.40039 243.19922 C 338.80038 251.99921 348.93412 261.99923 354.80078 273.19922 C 360.66744 284.13254 363.59961 296.53374 363.59961 310.40039 C 363.59961 336.00037 353.33409 356.66707 332.80078 372.40039 C 312.26747 387.86704 281.46702 395.59961 240.40039 395.59961 C 225.73374 395.59961 211.86743 394.26627 198.80078 391.59961 C 185.73413 388.66628 174.40077 385.19921 164.80078 381.19922 C 155.20079 377.19922 148.13294 373.46666 143.59961 370 L 143.59961 298.40039 C 156.3996 305.60038 172.53335 312.40079 192 318.80078 C 211.46665 324.93411 233.06747 328 256.80078 328 C 266.40077 328 273.46667 326.80039 278 324.40039 C 282.8 321.73373 285.19922 317.20077 285.19922 310.80078 C 285.19922 303.86745 279.86587 298.13294 269.19922 293.59961 C 258.79923 288.79961 242.26625 282.93333 219.59961 276 C 201.99963 270.40001 186.93371 264.26627 174.40039 257.59961 C 162.13374 250.66628 152.66666 242.13332 146 232 C 139.60001 221.60001 136.40039 208.40037 136.40039 192.40039 C 136.40039 175.86707 140.66589 160.93293 149.19922 147.59961 C 157.73254 134.26629 171.0659 123.73333 189.19922 116 C 207.33253 108.26667 230.53414 104.40039 258.80078 104.40039 z" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="header-title">
+      <span>{{ title }}</span>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <button type="button" class="icon-button" (click)="toggleThemePicker()">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--primary-text)"><path d="M252.33-912.67 300-960l346.12 346.12q23.21 23.21 23.21 56.96 0 33.76-23 56.59l-182 182q-23 23-55 23t-55-23l-182-182q-23-22.85-23-56.63t23-56.63l189.34-189.74-109.34-109.34Zm157 157L213-559.33h392.67L409.33-755.67Zm345.19 475q-30.85 0-52.69-21.93Q680-324.53 680-355.33q0-18.57 9.5-39.79 9.5-21.21 23.83-42.21 8.34-12.67 19.34-27 11-14.34 22-27 11 12.66 22 27 11 14.33 19.33 27 14.33 21 23.83 42.21 9.5 21.22 9.5 39.79 0 30.8-21.97 52.73-21.98 21.93-52.84 21.93ZM80 .67v-134h800v134H80Z"/></svg>
+    </button>
+  </div>
+
+</nav>
+
+@if( themePickerVisible ) {
+  <div class="theme-picker-overlay">
+    <div class="overlay-content">
+      <ng-container [ngTemplateOutlet]="themeButton"
+                    [ngTemplateOutletContext]="{
+                    theme: 'red',
+                    themeLabel: 'Rose & Red',
+                    themeSelected: selectedTheme === 'red'
+                  }"></ng-container>
+      <ng-container [ngTemplateOutlet]="themeButton"
+                    [ngTemplateOutletContext]="{
+                    theme: 'blue',
+                    themeLabel: 'Azure & Blue',
+                    themeSelected: selectedTheme === 'blue'
+                  }"></ng-container>
+      <ng-container [ngTemplateOutlet]="themeButton"
+                    [ngTemplateOutletContext]="{
+                    theme: 'magenta',
+                    themeLabel: 'Magenta & Violet',
+                    themeSelected: selectedTheme === 'magenta'
+                  }"></ng-container>
+      <ng-container [ngTemplateOutlet]="themeButton"
+                    [ngTemplateOutletContext]="{
+                    theme: 'green',
+                    themeLabel: 'Cyan & Orange',
+                    themeSelected: selectedTheme === 'green'
+                  }"></ng-container>
+    </div>
+  </div>
+}
+
+<ng-template #themeButton let-theme="theme" let-themeLabel="themeLabel" let-themeSelected="themeSelected">
+  <button class="menu-item" (click)="setTheme( theme )">
+    @if( themeSelected ) {
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--menu-item-selected-icon-color)"><path d="M480-280q83 0 141.5-58.5T680-480q0-83-58.5-141.5T480-680q-83 0-141.5 58.5T280-480q0 83 58.5 141.5T480-280Zm0 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+    }
+    @else {
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="var(--menu-item-icon-color)"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+    }
+    <span class="menu-item-label">{{ themeLabel }}</span>
+  </button>
+</ng-template>

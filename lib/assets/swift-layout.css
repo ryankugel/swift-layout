@@ -1,0 +1,120 @@
+:root {
+  --primary-text: #262626;
+  --pane-background: #f7f7f7;
+  --gutter-background: #e2e8f0;
+  --gutter-toggle: #a7a7a7;
+  --gutter-toggle-hover: #b4b4b4;
+  --gutter-toggle-active: #9a9a9a;
+  --gutter-toggle-icon: #f0f0f0;
+  --label-font-family: Roboto, "Helvetica Neue", sans-serif;
+  --label-text-size: 0.875rem;
+  --label-text-weight: 500;
+  --label-letter-spacing: 0.006rem;
+  --menu-box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, .2), 0px 2px 2px 0px rgba(0, 0, 0, .14), 0px 1px 5px 0px rgba(0, 0, 0, .12);
+  --success-green: #d1f3a9;
+  --error-red: #ff6f6f;
+}
+
+@layer swift-layout {
+  /* Layout container and panes */
+  swift-layout, swift-layout-section {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  .swift-layout {
+    height: 100%;
+    width: 100%;
+  }
+
+  .layout-component {
+    box-sizing: border-box;
+  }
+
+  .layout-pane-section {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .layout-pane-section.pane-resizing {
+    user-select: none;
+  }
+
+  .layout-vertical {
+    flex-direction: column;
+  }
+
+  .layout-pane-content {
+    background-color: var(--pane-background);
+    display: flex;
+    overflow: hidden;
+  }
+
+  .layout-pane-content.middle-pane {
+    flex-grow: 1;
+  }
+
+  /* Gutter and handles */
+  .layout-pane-gutter {
+    align-items: center;
+    background-color: var(--gutter-background);
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    justify-content: center;
+    transition: 0.1s;
+  }
+
+  .layout-pane-gutter.pane-gutter-resizing {
+    background-color: var(--success-green);
+  }
+
+  .layout-pane-gutter.pane-gutter-resizing.invalid-resize {
+    background-color: var(--error-red);
+  }
+
+  .layout-horizontal > .layout-pane-gutter {
+    cursor: col-resize;
+  }
+
+  .layout-vertical > .layout-pane-gutter {
+    cursor: row-resize;
+  }
+
+  .layout-pane-gutter.gutter-collapsed {
+    cursor: default !important;
+  }
+
+  .layout-pane-gutter-toggle {
+    background-color: var(--gutter-toggle);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 0;
+    transition: 0.1s;
+  }
+
+  .layout-pane-gutter-toggle:hover {
+    background-color: var(--gutter-toggle-hover);
+  }
+
+  .layout-pane-gutter-toggle:hover:active {
+    background-color: var(--gutter-toggle-active);
+  }
+
+  .layout-pane-gutter-toggle svg.gutter-icon {
+    fill: var(--gutter-toggle-icon);
+  }
+
+  .layout-pane-gutter-toggle svg.gutter-icon.last {
+    transform: rotate(180deg);
+  }
+
+  .pane-gutter-resizing .layout-pane-gutter-toggle {
+    opacity: 0;
+  }
+}

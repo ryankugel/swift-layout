@@ -1,0 +1,31 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/lib",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "stripInternal": true,
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "types": [],
+    "paths": {
+      "swift-layout/*": [ "./*/public_api" ]
+    },
+    "lib": [
+      "es2022",
+      "dom"
+    ]
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "files": [
+    "./public_api.ts"
+  ],
+  "angularCompilerOptions": {
+    "flatModuleOutFile": "swift-layout.js",
+    "flatModuleId": "swift-layout"
+  }
+}

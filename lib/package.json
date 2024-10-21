@@ -1,0 +1,25 @@
+{
+  "name": "swift-layout",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryankugel/swift-layout"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "GPL-3.0",
+  "exports": {
+    "./assets/": "./assets/"
+  },
+  "module": "swift-layout.js",
+  "typings": "swift-layout.d.ts",
+  "peerDependencies": {
+    "@angular/core": "^17.0.0 || 18.0.0",
+    "@angular/common": "^17.0.0 || ^18.0.0"
+  },
+  "dependencies": {
+    "tslib": "~2.7.0"
+  },
+  "sideEffects": false
+}

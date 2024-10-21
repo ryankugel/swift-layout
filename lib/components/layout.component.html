@@ -1,0 +1,50 @@
+<div class="swift-layout layout-component" [ngStyle]="style">
+  <swift-layout-section orientation="vertical" [stateKey]="getStateKey( Constants.verticalOrientation )" [stateStorage]="stateStorage"
+                        [gutterSize]="gutterSize" [gutterToggleSize]="gutterToggleSize" [gutterToggleSizeClosed]="gutterToggleSizeClosed"
+                        [firstPaneSize]="topPaneSize" [minFirstPaneSize]="topPaneMinSize" [maxFirstPaneSize]="topPaneMaxSize"
+                        [lastPaneSize]="bottomPaneSize" [minLastPaneSize]="bottomPaneMinSize" [maxLastPaneSize]="bottomPaneMaxSize">
+
+    @if( topPaneTemplate ) {
+      <ng-template firstPane>
+        <ng-container *ngTemplateOutlet="topPaneTemplate"></ng-container>
+      </ng-template>
+    }
+
+    <ng-template middlePane>
+      @if( leftPaneTemplate || rightPaneTemplate ) {
+        <swift-layout-section orientation="horizontal" [stateKey]="getStateKey( Constants.horizontalOrientation )" [stateStorage]="stateStorage"
+                              [gutterSize]="gutterSize" [gutterToggleSize]="gutterToggleSize" [gutterToggleSizeClosed]="gutterToggleSizeClosed"
+                              [firstPaneSize]="leftPaneSize" [minFirstPaneSize]="leftPaneMinSize" [maxFirstPaneSize]="leftPaneMaxSize"
+                              [lastPaneSize]="rightPaneSize" [minLastPaneSize]="rightPaneMinSize" [maxLastPaneSize]="rightPaneMaxSize">
+
+          @if( leftPaneTemplate ) {
+            <ng-template firstPane>
+              <ng-container *ngTemplateOutlet="leftPaneTemplate"></ng-container>
+            </ng-template>
+          }
+
+          <ng-template middlePane>
+            <ng-container *ngTemplateOutlet="centerPaneTemplate"></ng-container>
+          </ng-template>
+
+          @if( rightPaneTemplate ) {
+            <ng-template lastPane>
+              <ng-container *ngTemplateOutlet="rightPaneTemplate"></ng-container>
+            </ng-template>
+          }
+
+        </swift-layout-section>
+      }
+      @else {
+        <ng-container *ngTemplateOutlet="centerPaneTemplate"></ng-container>
+      }
+    </ng-template>
+
+    @if( bottomPaneTemplate ) {
+      <ng-template lastPane>
+        <ng-container *ngTemplateOutlet="bottomPaneTemplate"></ng-container>
+      </ng-template>
+    }
+
+  </swift-layout-section>
+</div>

@@ -1,0 +1,74 @@
+<div #section class="layout-pane-section layout-component"
+     [ngClass]="{
+       'layout-horizontal': orientation === 'horizontal',
+       'layout-vertical': orientation === 'vertical'
+     }">
+
+  <!-- First pane -->
+  @if( firstPaneTemplate ) {
+    <div #firstPane class="layout-pane-content layout-component"
+         [@toggle]="{ value: firstPaneVisible, params: { paneSize: getPaneSize( 'first' ) } }">
+      <ng-container *ngTemplateOutlet="firstPaneTemplate"></ng-container>
+    </div>
+
+    <ng-container [ngTemplateOutlet]="gutterTemplate"
+                  [ngTemplateOutletContext]="{
+                    'pane': 'first',
+                    'paneVisible': firstPaneVisible
+                  }"></ng-container>
+  }
+
+  <!-- Middle pane -->
+  <div #middlePane class="layout-pane-content middle-pane layout-component">
+    <ng-container *ngTemplateOutlet="middlePaneTemplate"></ng-container>
+  </div>
+
+  <!-- Last pane -->
+  @if( lastPaneTemplate ) {
+    <ng-container [ngTemplateOutlet]="gutterTemplate"
+                  [ngTemplateOutletContext]="{
+                    'pane': 'last',
+                    'paneVisible': lastPaneVisible
+                  }"></ng-container>
+
+    <div #lastPane class="layout-pane-content layout-component"
+         [@toggle]="{ value: lastPaneVisible, params: { paneSize: getPaneSize( 'last' ) } }">
+      <ng-container *ngTemplateOutlet="lastPaneTemplate"></ng-container>
+    </div>
+  }
+
+</div>
+
+<!-- Template for the resize bar -->
+<ng-template #gutterTemplate let-pane="pane" let-paneVisible="paneVisible">
+  <div #gutter [class]="getGutterClass( pane )" role="separator"
+       [ngClass]="{ 'gutter-collapsed': !paneVisible }"
+       (mousedown)="onGutterMouseDown( $event, pane, paneVisible )">
+    <button type="button" class="layout-pane-gutter-toggle layout-component"
+            [@toggleButton]="{ value: paneVisible, params: {
+              toggleWidth: getToggleButtonWidth( paneVisible ),
+              toggleHeight: getToggleButtonHeight( paneVisible )
+            } }"
+            (click)="onGutterHandleClick( pane )" [ngStyle]="getGutterStyle()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" class="gutter-icon"
+           [ngStyle]="getGutterIconStyle()" [ngClass]="{ 'last': pane === 'last' }">
+        @if( orientation === Constants.horizontalOrientation ) {
+          @if( paneVisible ) {
+            <path d="M 337.60563,480 100,240 337.60563,0 380,42.82158 184.78873,240 380,437.17842 Z" />
+          }
+          @else {
+            <path d="M 295.21127,240 100,42.821577 142.39437,0 380,240 142.39437,480 100,437.17842 Z" />
+          }
+        }
+        @else {
+          @if( paneVisible ) {
+            <path d="M 240,185.08834 43,380 0,337.45583 240,100 480,337.45583 437,380 Z" />
+          }
+          @else {
+            <path d="M 240,380 0,142.54417 43,100 240,294.91166 437,100 l 43,42.54417 z" />
+          }
+        }
+      </svg>
+    </button>
+  </div>
+</ng-template>
