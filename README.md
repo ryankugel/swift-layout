@@ -1,8 +1,9 @@
 # Swift Layout
 
+[![npm version](https://badge.fury.io/js/swift-layout.svg)](https://badge.fury.io/js/swift-layout)
 [![Build Status](https://github.com/ryankugel/swift-layout/actions/workflows/build.yml/badge.svg)](https://github.com/ryankugel/swift-layout/actions/workflows/build.yml)
 
-![Swift Layout logo](public/icon.png)
+![Swift Layout logo](https://raw.githubusercontent.com/ryankugel/swift-layout/refs/heads/master/public/icon.png)
 
 A simple layout library for Angular, designed to mimic some of the functionality of the [jQuery UI Layout plugin](https://plugins.jquery.com/layout/).
 
@@ -100,7 +101,7 @@ In its simplest form, Swift Layout can be used to set up multiple resizable pane
 ```
 
 ##### *Result*
-<img src="screenshots/Minimal_Example.png" alt="Minimal example of Swift Layout" style="width: 830px" />
+<img src="https://raw.githubusercontent.com/ryankugel/swift-layout/refs/heads/master/screenshots/Minimal_Example.png" alt="Minimal example of Swift Layout" style="width: 830px" />
 
 A variety of options are provided by Swift Layout:
 - Styles can be added to the layout using the `style` option.
@@ -133,7 +134,7 @@ These values are set as a percentage.
 ```
 
 ##### *Result*
-<img src="screenshots/Detailed_Example.png" alt="Minimal example of Swift Layout" style="width: 830px" />
+<img src="https://raw.githubusercontent.com/ryankugel/swift-layout/refs/heads/master/screenshots/Detailed_Example.png" alt="Minimal example of Swift Layout" style="width: 830px" />
 
 ---
 

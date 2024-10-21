@@ -12,7 +12,8 @@
     "deprecation"
   ],
   "ignorePatterns": [
-    "**/*.html"
+    "**/*.html",
+    "gulpfile.js"
   ],
   "rules": {
     "@typescript-eslint/array-type": "warn",
